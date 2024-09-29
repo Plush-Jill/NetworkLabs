@@ -52,7 +52,7 @@ void MulticastApp::handle_receive(const boost::system::error_code& error, std::s
         auto now = std::chrono::steady_clock::now();
 
         // Обновляем информацию о "живых" копиях
-        alive_peers_[sender_ip] = now;
+        alive_peers_[sender_ip + ':' + std::to_string(sender_endpoint_.port())] = now;
 
         // Выводим обновленный список "живых" копий
         display_alive_peers();
