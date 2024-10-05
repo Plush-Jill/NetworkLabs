@@ -1,25 +1,32 @@
-#include <boost/asio.hpp>
 #include <iostream>
-#include <set>
-#include <string>
-#include "MulticastApp.h"
-
+#include "MulticastApp.hpp"
+/// 0.0.0.0 230.255.0.1
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        std::cerr << "Usage: " << argv[0] << " <multicast_address> <multicast_port>\n";
-        return 1;
-    }
-
-    std::string multicast_address = argv[1];
-    short multicast_port = static_cast<short>(std::stoi(argv[2]));
-
     try {
-        boost::asio::io_context io_context;
-        MulticastApp app(io_context, multicast_address, multicast_port);
-        io_context.run();
+        if (argc != 3) {
+            std::cerr << "Usage: receiver <listen_address> <multicast_address>\n";
+            std::cerr << "  For IPv4, try:\n";
+            std::cerr << "    receiver 0.0.0.0 239.255.0.1\n";
+            std::cerr << "  For IPv6, try:\n";
+            std::cerr << "    receiver 0::0 ff31::8000:1234\n";
+            return 1;
+        }
+
+        std::string listen_address = argv[1];
+        std::string multicast_address = argv[2];
+        MulticastApp multicast_app {listen_address, multicast_address};
+        multicast_app.start();
+        std::cout << "App started\n";
+        sleep(60 * 30);
+
     } catch (std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        std::cerr << "Exception: " << e.what() << "\n";
     }
+
+
+
 
     return 0;
 }
+
+
