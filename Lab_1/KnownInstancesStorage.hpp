@@ -38,8 +38,8 @@ public:
 class KnownInstancesStorage {
 private:
     std::mutex mutex_;
-    static constexpr int timeout_ {30};
-    std::map<KeyType, int> storage_;
+    static constexpr boost::chrono::seconds timeout_ {30};
+    std::map<KeyType, boost::chrono::seconds> storage_;
     bool changed_;
 public:
 
@@ -66,7 +66,7 @@ public:
     * @brief Возвращает ссылку на хранилище.
      * @return std::map<KeyType, int>&
     */
-    [[nodiscard]] std::map<KeyType, int>& getStorage();
+    [[nodiscard]] std::map<KeyType, boost::chrono::seconds>& getStorage();
     /**
     * @brief выводит хранилище в std::cout и ставит changed_ в true
     */

@@ -28,8 +28,8 @@ void MulticastApp::observe_storage() {
 
                 auto& map = this->storage_->getStorage();
                 for (auto it = map.begin(); it != map.end();) {
-                    it->second -= 1;
-                    if (it->second <= 0) {
+                    it->second -= boost::chrono::seconds {1};
+                    if (it->second <= boost::chrono::seconds::zero()) {
                         this->storage_->set_changed("erased " + it->first.to_string());
                         it = map.erase(it);
                     } else {
