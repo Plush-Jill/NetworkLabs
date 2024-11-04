@@ -27,28 +27,28 @@ private:
     void handle_greeting(const std::shared_ptr<Connection>& connection);
     void read_auth_methods(const boost::system::error_code& error_code,
                            std::size_t length,
-                           std::shared_ptr<Connection> connection);
+                           const std::shared_ptr<Connection>& connection);
     void send_server_choice(const boost::system::error_code& error_code,
                             std::size_t length,
                             std::size_t count_of_methods,
-                            std::shared_ptr<Connection> connection);
+                            const std::shared_ptr<Connection>& connection);
     void handle_connection_request(const boost::system::error_code& error_code,
                                    std::size_t length,
-                                   std::shared_ptr<Connection> connection);
+                                   const std::shared_ptr<Connection>& connection);
 
     void read_address_type(const boost::system::error_code& error_code,
                            std::size_t length,
-                           std::shared_ptr<Connection> connection);
+                           const std::shared_ptr<Connection>& connection);
     void handle_address(const boost::system::error_code& error_code,
                         std::size_t length,
                         std::shared_ptr<Connection> connection);
 
     void read_IPv4_address(const boost::system::error_code& error_code,
                            std::size_t length,
-                           std::shared_ptr<Connection> connection);
+                           const std::shared_ptr<Connection>& connection);
     void get_domain_length(const boost::system::error_code& error_code,
                            std::size_t length,
-                           std::shared_ptr<Connection> connection);
+                           const std::shared_ptr<Connection>& connection);
     void get_domain_name(const boost::system::error_code& error_code,
                          std::size_t length,
                          std::shared_ptr<Connection> connection);
@@ -57,24 +57,24 @@ private:
     void send_server_response(const boost::system::error_code& error_code,
                               const std::shared_ptr<Connection>& connection,
                               const std::shared_ptr<boost::asio::ip::tcp::socket>& remote_socket,
-                              boost::asio::ip::tcp::endpoint remote_endpoint);
+                              const boost::asio::ip::tcp::endpoint& remote_endpoint);
 
     void start_data_transfer(const boost::system::error_code& error_code,
                              std::size_t,
-                             std::shared_ptr<Connection> connection,
-                             std::shared_ptr<boost::asio::ip::tcp::socket> remote_socket);
+                             const std::shared_ptr<Connection>& connection,
+                             const std::shared_ptr<boost::asio::ip::tcp::socket>& remote_socket);
     void send_data_to_server(const boost::system::error_code& error_code,
                              std::size_t length,
-                             std::shared_ptr<Connection> connection,
-                             std::shared_ptr<boost::asio::ip::tcp::socket> remote_socket);
+                             const std::shared_ptr<Connection>& connection,
+                             const std::shared_ptr<boost::asio::ip::tcp::socket>& remote_socket);
     void send_data_to_client(const boost::system::error_code& error_code,
                              std::size_t length,
-                             std::shared_ptr<Connection> connection,
-                             std::shared_ptr<boost::asio::ip::tcp::socket> remote_socket);
+                             const std::shared_ptr<Connection>& connection,
+                             const std::shared_ptr<boost::asio::ip::tcp::socket>& remote_socket);
     void receive_data_from_client(const boost::system::error_code& error_code,
                                   std::size_t length,
-                                  std::shared_ptr<Connection> connection,
-                                  std::shared_ptr<boost::asio::ip::tcp::socket> remote_socket);
+                                  const std::shared_ptr<Connection>& connection,
+                                  const std::shared_ptr<boost::asio::ip::tcp::socket>& remote_socket);
     void receive_data_from_server(const boost::system::error_code& error_code,
                                   std::size_t length,
                                   const std::shared_ptr<Connection>& connection,

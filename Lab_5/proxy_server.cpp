@@ -12,6 +12,7 @@ Socks5Proxy::Socks5Proxy(boost::asio::ip::port_type proxy_port)
 
 void Socks5Proxy::start() {
     accept_connection();
+    std::cout << "proxy started" << std::endl;
     io_context_.run();
 }
 
@@ -42,7 +43,7 @@ void Socks5Proxy::handle_greeting(const std::shared_ptr<Connection>& connection)
 
 void Socks5Proxy::read_auth_methods(const boost::system::error_code& error_code,
                                     std::size_t length,
-                                    std::shared_ptr<Connection> connection) {
+                                    const std::shared_ptr<Connection>& connection) {
     if (!error_code && length == 2 && connection->to_server_buffer()[0] == SOCKS5) {
         size_t count_of_methods = connection->to_server_buffer()[1];
         async_read(connection->get_socket(),
@@ -63,7 +64,7 @@ void Socks5Proxy::read_auth_methods(const boost::system::error_code& error_code,
 void Socks5Proxy::send_server_choice(const boost::system::error_code& error_code,
                                      std::size_t length,
                                      std::size_t count_of_methods,
-                                     std::shared_ptr<Connection> connection) {
+                                     const std::shared_ptr<Connection>& connection) {
     if (!error_code && length == count_of_methods) {
         connection->to_server_buffer()[0] = SOCKS5;
         connection->to_server_buffer()[1] = NO_AUTH;
@@ -83,7 +84,7 @@ void Socks5Proxy::send_server_choice(const boost::system::error_code& error_code
 
 void Socks5Proxy::handle_connection_request(const boost::system::error_code& error_code,
                                             std::size_t length,
-                                            std::shared_ptr<Connection> connection) {
+                                            const std::shared_ptr<Connection>& connection) {
     if (!error_code) {
         async_read(connection->get_socket(),
                    boost::asio::buffer(connection->to_server_buffer(), 3),
@@ -101,7 +102,7 @@ void Socks5Proxy::handle_connection_request(const boost::system::error_code& err
 
 void Socks5Proxy::read_address_type(const boost::system::error_code& error_code,
                                     std::size_t length,
-                                    std::shared_ptr<Connection> connection) {
+                                    const std::shared_ptr<Connection>& connection) {
     if (!error_code && length == 3 && connection->to_server_buffer()[0] == SOCKS5 &&
             connection->to_server_buffer()[1] == CONNECT &&
             connection->to_server_buffer()[2] == RESERVED) {
@@ -154,7 +155,7 @@ void Socks5Proxy::handle_address(const boost::system::error_code& error_code,
 
 void Socks5Proxy::read_IPv4_address(const boost::system::error_code& error_code,
                                     std::size_t length,
-                                    std::shared_ptr<Connection> connection) {
+                                    const std::shared_ptr<Connection>& connection) {
     if (!error_code && length == 6) {
         boost::asio::ip::address_v4::bytes_type ip_address_bytes;
         memcpy(ip_address_bytes.data(), &connection->to_server_buffer()[0], 4);
@@ -182,7 +183,7 @@ void Socks5Proxy::read_IPv4_address(const boost::system::error_code& error_code,
 
 void Socks5Proxy::get_domain_length(const boost::system::error_code& error_code,
                                     std::size_t length,
-                                    std::shared_ptr<Connection> connection) {
+                                    const std::shared_ptr<Connection>& connection) {
     if (!error_code && length == 1) {
         uint16_t name_length;
         memcpy(&name_length, &connection->to_server_buffer()[0], 1);
@@ -257,7 +258,7 @@ unsigned char Socks5Proxy::get_connection_error(const boost::system::error_code&
 void Socks5Proxy::send_server_response(const boost::system::error_code& error_code,
                                        const std::shared_ptr<Connection>& connection,
                                        const std::shared_ptr<boost::asio::ip::tcp::socket>& remote_socket,
-                                       boost::asio::ip::tcp::endpoint remote_endpoint) {
+                                       const boost::asio::ip::tcp::endpoint& remote_endpoint) {
     connection->to_server_buffer()[0] = SOCKS5;
     connection->to_server_buffer()[1] = get_connection_error(error_code);
     connection->to_server_buffer()[2] = RESERVED;
@@ -296,8 +297,8 @@ void Socks5Proxy::send_server_response(const boost::system::error_code& error_co
 
 void Socks5Proxy::start_data_transfer(const boost::system::error_code& error_code,
                                       std::size_t,
-                                      std::shared_ptr<Connection> connection,
-                                      std::shared_ptr<boost::asio::ip::tcp::socket> remote_socket) {
+                                      const std::shared_ptr<Connection>& connection,
+                                      const std::shared_ptr<boost::asio::ip::tcp::socket>& remote_socket) {
     try {
         if (!error_code) {
             connection->get_socket().async_read_some(boost::asio::buffer(connection->to_server_buffer(), max_length_),
@@ -330,8 +331,8 @@ void Socks5Proxy::start_data_transfer(const boost::system::error_code& error_cod
 }
 
 void Socks5Proxy::send_data_to_server(const boost::system::error_code& error_code,
-                                      std::size_t length, std::shared_ptr<Connection> connection,
-                                      std::shared_ptr<boost::asio::ip::tcp::socket> remote_socket) {
+                                      std::size_t length, const std::shared_ptr<Connection>& connection,
+                                      const std::shared_ptr<boost::asio::ip::tcp::socket>& remote_socket) {
     try {
         if (!error_code) {
             async_write(*remote_socket,
@@ -355,8 +356,8 @@ void Socks5Proxy::send_data_to_server(const boost::system::error_code& error_cod
 
 void Socks5Proxy::send_data_to_client(const boost::system::error_code& error_code,
                                       std::size_t length,
-                                      std::shared_ptr<Connection> connection,
-                                      std::shared_ptr<boost::asio::ip::tcp::socket> remote_socket) {
+                                      const std::shared_ptr<Connection>& connection,
+                                      const std::shared_ptr<boost::asio::ip::tcp::socket>& remote_socket) {
     try {
         if (!error_code) {
             async_write(connection->get_socket(),
@@ -380,8 +381,8 @@ void Socks5Proxy::send_data_to_client(const boost::system::error_code& error_cod
 
 void Socks5Proxy::receive_data_from_client(const boost::system::error_code& error_code,
                                            std::size_t length,
-                                           std::shared_ptr<Connection> connection,
-                                           std::shared_ptr<boost::asio::ip::tcp::socket> remote_socket) {
+                                           const std::shared_ptr<Connection>& connection,
+                                           const std::shared_ptr<boost::asio::ip::tcp::socket>& remote_socket) {
     try {
         if (!error_code) {
             connection->get_socket().async_read_some(boost::asio::buffer(connection->to_server_buffer(),
