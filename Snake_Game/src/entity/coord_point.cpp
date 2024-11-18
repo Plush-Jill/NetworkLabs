@@ -5,20 +5,20 @@
 #include "include/entity/coord_point.hpp"
 
 int CoordPoint::get_x() const {
-    return x_;
+    return m_x;
 }
 
 void CoordPoint::set_x(int x) {
-    x_ = x;
+    m_x = x;
 }
 
 int CoordPoint::get_y() const {
-    return y_;
+    return m_y;
 }
 
 void CoordPoint::set_y(int y) {
-    y_ = y;
+    m_y = y;
 }
 
 CoordPoint::CoordPoint(int x, int y) :
-x_(x), y_(y) {}
+        m_x(x), m_y(y) {}

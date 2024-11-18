@@ -1,21 +1,60 @@
 cmake_minimum_required(VERSION 3.16)
 
+
+#-DCMAKE_CXX_COMPILER=/usr/bin/g++
+#-DQT_QMAKE_EXECUTABLE=/home/plushjill/Qt/6.8.0/gcc_64/bin/qmake
+#-DCMAKE_GENERATOR=Ninja
+#-DCMAKE_PREFIX_PATH=/home/plushjill/Qt/6.8.0/gcc_64
+#-DCMAKE_BUILD_TYPE=Debug
+#-DCMAKE_PROJECT_INCLUDE_BEFORE=build/Desktop_Qt_6_8_0-Debug/.qtc/package-manager/auto-setup.cmake
+#-DCMAKE_C_COMPILER=/usr/bin/gcc
 project(Snake_Game VERSION 0.1 LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 23)
+
+# Указываем компиляторы
+set(CMAKE_CXX_COMPILER "/usr/bin/g++")
+set(CMAKE_C_COMPILER "/usr/bin/gcc")
+
+# Путь к qmake и Qt
+set(QT_QMAKE_EXECUTABLE "/home/plushjill/Qt/6.8.0/gcc_64/bin/qmake")
+set(CMAKE_PREFIX_PATH "/home/plushjill/Qt/6.8.0/gcc_64")
+
+# Используем генератор Ninja
+set(CMAKE_GENERATOR "Ninja")
+
+# Указываем тип сборки
+set(CMAKE_BUILD_TYPE "Debug")
+
+# Указываем путь к автоконфигурации
+set(CMAKE_PROJECT_INCLUDE_BEFORE "${CMAKE_BINARY_DIR}/Desktop_Qt_6_8_0-Debug/.qtc/package-manager/auto-setup.cmake")
+
+
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
 
 set(CMAKE_CXX_STANDARD 23)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Multimedia)
+
+
+find_package(Qt6 6.8 REQUIRED COMPONENTS Core Gui Qml Quick Qml)
 find_package(Protobuf REQUIRED)
+find_package(OpenGL REQUIRED)
+
 
 include_directories(${PROTOBUF_INCLUDE_DIRS})
 
-qt_standard_project_setup(REQUIRES 6.5)
+qt_standard_project_setup(REQUIRES 6.8)
 
 qt_add_executable(appSnake_Game
         src/main.cpp
         src/game_field_controller.cpp
+        appSnake_Game_resources.qrc
         include/game_field_controller.hpp
         src/entity/snake.cpp
         include/entity/snake.hpp
@@ -62,20 +101,61 @@ qt_add_executable(appSnake_Game
         include/entity/game_messages/error_message.hpp
         src/entity/game_messages/role_change_message.cpp
         include/entity/game_messages/role_change_message.hpp
+        resources/Snake_Game_Window/Snake_Game_WindowContent/App.qml
+        src/main_window_controller.cpp
+        src/main_window_controller.hpp
+        src/util/config_editor.cpp
+        include/util/config_editor.hpp
+        src/game_model.cpp
+        include/game_model.hpp
+        src/announcement_sender.cpp
+        include/announcement_sender.hpp
 )
 
-qt6_add_resources(appSnake_Game_RESOURCES resources.qrc)
+#qt6_add_resources(SNAKE_GAME_RESOURCES appSnake_Game_resources.qrc)
+#qt6_add_resources(appSnake_Game_RESOURCES appSnake_Game_resources.qrc)
+#qt6_add_resources(appSnake_Game_resources "${CMAKE_SOURCE_DIR}/qrc_appSnake_Game_resources.qrc")
+#message(${CMAKE_SOURCE_DIR})
+
+qt6_add_resources(RESOURCES appSnake_Game_resources.qrc)
+
+set_target_properties(appSnake_Game PROPERTIES
+        QT_QML_URI "org.example.appSnake_Game"
+)
+#qt6_add_resources(qrc_srcs ${CMAKE_CURRENT_SOURCE_DIR}/appSnake_Game_resources.qrc)
+
+set_source_files_properties(
+        "./resources/Snake_Game_Window/Snake_Game_WindowContent/App.qml"
+        PROPERTIES QT_RESOURCE_ALIAS App.qml
+)
+
+add_library(qrc STATIC ${qrc_srcs})
 
 qt_add_qml_module(appSnake_Game
     URI Snake_Game
     VERSION 1.0
     QML_FILES
-        Main.qml
+        resources/Snake_Game_Window/Snake_Game_WindowContent/MainMenu.qml
+#        resources/Snake_Game_Window/Snake_Game_Window.qmlproject
+#        resources/Snake_Game_Window/qtquickcontrols2.conf
+#        resources/Snake_Game_Window/Snake_Game_WindowContent/App.qml
+#        resources/Snake_Game_Window/Snake_Game_WindowContent/MainMenu.qml
+#        resources/Snake_Game_Window/Snake_Game_WindowContent/fonts/fonts.txt
+#        resources/Snake_Game_Window/Snake_Game_Window/Constants.qml
+#        resources/Snake_Game_Window/Snake_Game_Window/EventListModel.qml
+#        resources/Snake_Game_Window/Snake_Game_Window/EventListSimulator.qml
+#        resources/Snake_Game_Window/Snake_Game_Window/qmldir
+#        resources/Snake_Game_Window/Snake_Game_Window/designer/plugin.metainfo
+#        /resources/Snake_Game_Window/Snake_Game_WindowContent/MainMenu.qml
 )
-
+set_source_files_properties(
+        "./resources/Snake_Game_Window/Snake_Game_WindowContent/MainMenu.qml"
+        PROPERTIES QT_RESOURCE_ALIAS MainMenu.qml
+)
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
+
 set_target_properties(appSnake_Game PROPERTIES
 #    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appSnake_Game
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
@@ -84,10 +164,24 @@ set_target_properties(appSnake_Game PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
+#add_library(appSnake_Game_resources SHARED ${SNAKE_GAME_RESOURCES})
+
 target_link_libraries(appSnake_Game
     PRIVATE Qt6::Quick
         ${PROTOBUF_LIBRARIES}
-#        appSnake_Game_RESOURCES
+        Qt6::Quick
+        Qt6::Qml
+        Qt6::Network
+        Qt6::OpenGL
+        Qt6::Gui
+        Qt6::Core
+        protobuf::libprotobuf
+        OpenGL::GL
+        qrc
+        boost_filesystem
+#        ${SNAKE_GAME_RESOURCES}
+#        appSnake_Game_resources
+
 )
 target_include_directories(appSnake_Game PRIVATE "./include")
 include(GNUInstallDirs)

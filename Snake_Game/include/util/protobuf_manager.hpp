@@ -12,24 +12,33 @@
 #include "include/entity/game_state.hpp"
 #include "entity/game_messages/game_message.hpp"
 #include "entity/game_messages/join_message.hpp"
+#include "entity/game_announcement.hpp"
 
 class ProtobufManager {
 public:
+    static snakes::GameAnnouncement create_announcement(
+            const GameAnnouncement &announcement
+            );
+
     static snakes::GameState::Coord create_coord(
             CoordPoint coord_point
-    );
+            );
 
     static snakes::GameConfig create_game_config(
-            GameConfig config
-    );
+            const GameConfig& config
+            );
 
     static snakes::GamePlayer create_game_player(
             const GamePlayer& game_player
-    );
+            );
 
     static snakes::GamePlayers add_game_players(
             const std::vector<snakes::GamePlayer>& players
             );
+
+    static snakes::GamePlayers create_game_players_array(
+            const std::vector<GamePlayer>& players
+    );
 
     static snakes::GameState create_game_state(
             const GameState& state

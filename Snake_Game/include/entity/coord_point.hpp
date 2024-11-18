@@ -8,20 +8,21 @@
 
 class CoordPoint {
 private:
-    int x_;
-    int y_;
+    int m_x;
+    int m_y;
 
 public:
     explicit CoordPoint(int x, int y);
+
     [[nodiscard]] int get_x() const;
     [[nodiscard]] int get_y() const;
     void set_x(int x);
     void set_y(int y);
     CoordPoint get_shift_from(CoordPoint& other) const {
-        return CoordPoint(this->x_ - other.x_, this->y_ - other.y_);
+        return CoordPoint(this->m_x - other.m_x, this->m_y - other.m_y);
     }
     bool operator==(const CoordPoint& other) const {
-        return this->x_ == other.x_ && this->y_ == other.y_;
+        return this->m_x == other.m_x && this->m_y == other.m_y;
     }
     bool operator!=(const CoordPoint& other) const {
         return this != &other;
