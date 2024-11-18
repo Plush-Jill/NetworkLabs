@@ -4,12 +4,12 @@ project(Lab_1)
 set(CMAKE_CXX_STANDARD 23)
 
 add_executable(Lab_1 main.cpp
-        MulticastApp.cpp
-        MulticastApp.hpp
-        Sender.cpp
-        Sender.hpp
-        Receiver.cpp
-        Receiver.hpp
-        KnownInstancesStorage.cpp
-        KnownInstancesStorage.hpp
+        src/multicast_app.cpp
+        include/multicast_app.hpp
+        src/sender.cpp
+        include/sender.hpp
+        src/receiver.cpp
+        include/receiver.hpp
+        src/known_instances_storage.cpp
+        include/known_instances_storage.hpp
 )

@@ -6,9 +6,9 @@
 #include <chrono>
 #include <thread>
 #include <unordered_map>
-#include "KnownInstancesStorage.hpp"
-#include "Sender.hpp"
-#include "Receiver.hpp"
+#include "known_instances_storage.hpp"
+#include "sender.hpp"
+#include "receiver.hpp"
 
 class MulticastApp {
 public:

@@ -2,8 +2,8 @@
 // Created by plushjill on 02.10.2024.
 //
 
-#ifndef LAB_1_KNOWNINSTANCESSTORAGE_HPP
-#define LAB_1_KNOWNINSTANCESSTORAGE_HPP
+#ifndef LAB_1_KNOWN_INSTANCES_STORAGE_HPP
+#define LAB_1_KNOWN_INSTANCES_STORAGE_HPP
 #include <mutex>
 #include <boost/unordered_map.hpp>
 #include <boost/asio.hpp>
@@ -37,10 +37,10 @@ public:
 
 class KnownInstancesStorage {
 private:
-    std::mutex mutex_;
-    static constexpr boost::chrono::seconds timeout_ {30};
-    std::map<KeyType, boost::chrono::seconds> storage_;
-    bool changed_;
+    std::mutex m_mutex;
+    static constexpr boost::chrono::seconds m_timeout {30};
+    std::map<KeyType, boost::chrono::seconds> m_storage;
+    bool m_is_changed;
 public:
 
     KnownInstancesStorage();
@@ -54,11 +54,11 @@ public:
      */
     bool is_changed();
     /**
-     * @brief устанавливает значение changed_ в true
+     * @brief устанавливает значение m_is_changed в true
      */
     void set_changed();
     /**
-    * @brief устанавливает значение changed_ в true
+    * @brief устанавливает значение m_is_changed в true
      * и выводит причину этого изменения в std::cout.
     */
     void set_changed(std::string reason);
@@ -68,7 +68,7 @@ public:
     */
     [[nodiscard]] std::map<KeyType, boost::chrono::seconds>& getStorage();
     /**
-    * @brief выводит хранилище в std::cout и ставит changed_ в true
+    * @brief выводит хранилище в std::cout и ставит m_is_changed в true
     */
     void print_storage();
     /**
@@ -80,4 +80,4 @@ public:
 };
 
 
-#endif //LAB_1_KNOWNINSTANCESSTORAGE_HPP
+#endif //LAB_1_KNOWN_INSTANCES_STORAGE_HPP

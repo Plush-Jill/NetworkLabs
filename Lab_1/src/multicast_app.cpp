@@ -1,7 +1,7 @@
 #include <boost/asio.hpp>
-#include "Sender.hpp"
-#include "Receiver.hpp"
-#include "MulticastApp.hpp"
+#include "../include/sender.hpp"
+#include "../include/receiver.hpp"
+#include "../include/multicast_app.hpp"
 #include <boost/thread.hpp>
 
 MulticastApp::MulticastApp(const std::string &listen_address,

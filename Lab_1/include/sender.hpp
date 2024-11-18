@@ -5,18 +5,18 @@
 #ifndef LAB_1_SENDER_HPP
 #define LAB_1_SENDER_HPP
 #include <boost/asio.hpp>
-#include "KnownInstancesStorage.hpp"
+#include "known_instances_storage.hpp"
 
 class Sender {
 private:
-    std::shared_ptr<boost::asio::io_context> io_context_;
-    boost::asio::ip::udp::socket socket_;
-    boost::asio::ip::udp::endpoint endpoint_;
-    boost::asio::steady_timer timer_;
-    static constexpr boost::asio::ip::port_type multicast_port_ {30001};
-    static constexpr std::chrono::seconds timeout_ {10};
-    unsigned int sent_messages_count_;
-    std::string message_;
+    std::shared_ptr<boost::asio::io_context> m_io_context;
+    boost::asio::ip::udp::socket m_socket;
+    boost::asio::ip::udp::endpoint m_endpoint;
+    boost::asio::steady_timer m_timer;
+    static constexpr boost::asio::ip::port_type m_multicast_port {30001};
+    static constexpr std::chrono::seconds m_timeout {10};
+    unsigned int m_sent_messages_count;
+    std::string m_message;
 public:
     /**
      * @brief запускает асинхронную периодическую отправку сообщений на мультикаст адрес

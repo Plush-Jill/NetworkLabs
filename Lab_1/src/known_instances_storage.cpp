@@ -2,7 +2,7 @@
 // Created by plushjill on 02.10.2024.
 //
 
-#include "KnownInstancesStorage.hpp"
+#include "../include/known_instances_storage.hpp"
 
 #include <utility>
 #include <iostream>
@@ -26,44 +26,44 @@ boost::asio::ip::port_type KeyType::getPort() const {
 }
 
 void KnownInstancesStorage::add(const KeyType& key) {
-    std::lock_guard<std::mutex> lock_guard {this->mutex_};
-    if (!this->storage_.contains(key)) {
-        this->storage_.insert(std::pair<KeyType, boost::chrono::seconds>(key, timeout_));
+    std::lock_guard<std::mutex> lock_guard {this->m_mutex};
+    if (!this->m_storage.contains(key)) {
+        this->m_storage.insert(std::pair<KeyType, boost::chrono::seconds>(key, m_timeout));
         set_changed("added new entry");
     } else {
-        this->storage_[key] = KnownInstancesStorage::timeout_;
+        this->m_storage[key] = KnownInstancesStorage::m_timeout;
     }
 
 }
 
 void KnownInstancesStorage::print_storage() {
-    std::lock_guard<std::mutex> lock_guard {this->mutex_};
+    std::lock_guard<std::mutex> lock_guard {this->m_mutex};
     std::cout << "Alive instances:\n";
-    for (std::pair<KeyType, boost::chrono::seconds> map_entry : this->storage_){
+    for (std::pair<KeyType, boost::chrono::seconds> map_entry : this->m_storage){
         std::cout << std::format("{}:{} - {} sec\n",
                                  map_entry.first.getAddress().to_string(),
                                  map_entry.first.getPort(),
                                  map_entry.second.count());
     }
     std::cout << std::endl;
-    this->changed_ = false;
+    this->m_is_changed = false;
 
 }
 
 std::map<KeyType, boost::chrono::seconds>& KnownInstancesStorage::getStorage() {
-    return this->storage_;
+    return this->m_storage;
 }
 
 bool KnownInstancesStorage::is_changed() {
-    return this->changed_;
+    return this->m_is_changed;
 }
 
-KnownInstancesStorage::KnownInstancesStorage() : changed_(false) {}
+KnownInstancesStorage::KnownInstancesStorage() : m_is_changed(false) {}
 
 void KnownInstancesStorage::set_changed() {
-    this->changed_ = true;
+    this->m_is_changed = true;
 }
 void KnownInstancesStorage::set_changed(std::string reason) {
-    this->changed_ = true;
+    this->m_is_changed = true;
 //    std::cout << std::format("Storage was changed by reason: {}\n", reason);
 }
