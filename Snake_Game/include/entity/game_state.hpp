@@ -5,16 +5,15 @@
 #ifndef SNAKE_GAME_GAME_STATE_HPP
 #define SNAKE_GAME_GAME_STATE_HPP
 
-#include <vector>
 #include "snake.hpp"
 #include "game_player.hpp"
 
 class GameState {
 private:
-    int state_order_;
-    std::vector<Snake> snakes_;
-    std::set<CoordPoint> foods_;
-    std::vector<GamePlayer> game_players_;
+    int m_state_order = 0;
+    std::vector<Snake> m_snakes = {};
+    std::set<CoordPoint> m_foods = {};
+    std::vector<GamePlayer> m_game_players = {};
 
 public:
     [[nodiscard]] const std::vector<GamePlayer> &get_game_players() const;

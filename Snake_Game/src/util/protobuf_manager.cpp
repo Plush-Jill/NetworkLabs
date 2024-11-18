@@ -12,7 +12,7 @@
 #include "entity/game_messages/discover_message.hpp"
 
 
-snakes::GamePlayers ProtobufManager::add_game_players(
+snakes::GamePlayers ProtobufManager::add_game_players_proto(
         const std::vector<snakes::GamePlayer> &players
         ) {
     snakes::GamePlayers game_players_proto;
@@ -23,7 +23,7 @@ snakes::GamePlayers ProtobufManager::add_game_players(
     return game_players_proto;
 }
 
-snakes::GameConfig ProtobufManager::create_game_config(
+snakes::GameConfig ProtobufManager::create_game_config_proto(
         const GameConfig& config
         ) {
     snakes::GameConfig game_config_proto;
@@ -36,7 +36,7 @@ snakes::GameConfig ProtobufManager::create_game_config(
 }
 
 
-snakes::GameAnnouncement ProtobufManager::create_announcement(
+snakes::GameAnnouncement ProtobufManager::create_announcement_proto(
         const GameAnnouncement &announcement
         ) {
     snakes::GameAnnouncement game_announcement_proto;
@@ -44,19 +44,19 @@ snakes::GameAnnouncement ProtobufManager::create_announcement(
     game_announcement_proto.set_game_name(announcement.get_game_name());
     game_announcement_proto.set_can_join(announcement.is_can_join());
 
-    snakes::GameConfig* allocated_config = new snakes::GameConfig();
+    auto* allocated_config = new snakes::GameConfig();
     allocated_config->CopyFrom(
-            ProtobufManager::create_game_config(
+            ProtobufManager::create_game_config_proto(
                     announcement.get_config()));
     game_announcement_proto.set_allocated_config(allocated_config);
 
-    *game_announcement_proto.mutable_players() = ProtobufManager::create_game_players(
+    *game_announcement_proto.mutable_players() = ProtobufManager::create_game_players_proto(
             announcement.get_players());
 
     return game_announcement_proto;
 }
 
-snakes::GameState ProtobufManager::create_game_state(
+snakes::GameState ProtobufManager::create_game_state_proto(
         const GameState& state) {
     snakes::GameState game_state_proto;
     game_state_proto.set_state_order(state.get_state_order());
@@ -67,34 +67,32 @@ snakes::GameState ProtobufManager::create_game_state(
 
         new_snake_proto->set_player_id(snake.get_id());
 
-        *new_snake_proto->add_points() = ProtobufManager::create_coord(
-                snake.get_head().get_coord_point());
-        CoordPoint previous_point = snake.get_head().get_coord_point();
+        CoordPoint previous_point = snake.get_segments()[0];
 
-        for (SnakeSegment segment : snake.get_segments()) {
-            CoordPoint next_point = segment.get_coord_point();
-            *new_snake_proto->add_points() = ProtobufManager::create_coord(
+        for (CoordPoint point : snake.get_segments()) {
+            CoordPoint next_point = point;
+            *new_snake_proto->add_points() = ProtobufManager::create_coord_proto(
                     next_point.get_shift_from(previous_point));
 
             previous_point = next_point;
         }
 
-        new_snake_proto->set_state(ProtobufManager::get_snakes_state(snake.get_snake_state()));
+        new_snake_proto->set_state(ProtobufManager::get_snakes_state_proto(snake.get_snake_state()));
 
         new_snake_proto->set_head_direction(
-                ProtobufManager::get_snakes_direction(
+                ProtobufManager::get_snakes_direction_proto(
                         snake.get_head_direction()));
     }
 
     for (const CoordPoint& food : state.get_foods()) {
-        *game_state_proto.add_foods() = ProtobufManager::create_coord(food);
+        *game_state_proto.add_foods() = ProtobufManager::create_coord_proto(food);
     }
 
     return game_state_proto;
 
 }
 
-snakes::GameState::Coord ProtobufManager::create_coord(
+snakes::GameState::Coord ProtobufManager::create_coord_proto(
         CoordPoint coord_point) {
     snakes::GameState::Coord coord_proto;
     coord_proto.set_x(coord_point.get_x());
@@ -102,17 +100,17 @@ snakes::GameState::Coord ProtobufManager::create_coord(
     return coord_proto;
 }
 
-snakes::GamePlayers ProtobufManager::create_game_players(
+snakes::GamePlayers ProtobufManager::create_game_players_proto(
         const std::vector<GamePlayer>& players) {
     snakes::GamePlayers game_players_proto;
     for (const GamePlayer& game_player : players) {
-        *game_players_proto.add_players() = ProtobufManager::create_game_player(game_player);
+        *game_players_proto.add_players() = ProtobufManager::create_game_player_proto(game_player);
     }
 
     return game_players_proto;
 }
 
-snakes::GamePlayer ProtobufManager::create_game_player(
+snakes::GamePlayer ProtobufManager::create_game_player_proto(
         const GamePlayer &game_player) {
 
     snakes::GamePlayer player_proto;
@@ -120,13 +118,14 @@ snakes::GamePlayer ProtobufManager::create_game_player(
     player_proto.set_id(game_player.get_id());
     player_proto.set_ip_address(game_player.get_ip_address().to_string());
     player_proto.set_port(game_player.get_port());
-    player_proto.set_type(ProtobufManager::get_snakes_player_type(game_player.get_type()));
+    player_proto.set_role(ProtobufManager::get_snakes_node_role_proto(game_player.get_node_role()));
+    player_proto.set_type(ProtobufManager::get_snakes_player_type_proto(game_player.get_type()));
     player_proto.set_score(game_player.get_score());
 
     return player_proto;
 }
 
-snakes::PlayerType ProtobufManager::get_snakes_player_type(
+snakes::PlayerType ProtobufManager::get_snakes_player_type_proto(
         PlayerType type) {
     switch (type) {
         case PlayerType::Human: return snakes::PlayerType::HUMAN;
@@ -137,7 +136,7 @@ snakes::PlayerType ProtobufManager::get_snakes_player_type(
     }
 }
 
-snakes::GameState::Snake::SnakeState ProtobufManager::get_snakes_state(
+snakes::GameState::Snake::SnakeState ProtobufManager::get_snakes_state_proto(
         SnakeState state
 ) {
     switch (state) {
@@ -149,7 +148,7 @@ snakes::GameState::Snake::SnakeState ProtobufManager::get_snakes_state(
     }
 }
 
-snakes::Direction ProtobufManager::get_snakes_direction(
+snakes::Direction ProtobufManager::get_snakes_direction_proto(
         Direction direction
 ) {
     switch (direction) {
@@ -165,7 +164,7 @@ snakes::Direction ProtobufManager::get_snakes_direction(
     }
 }
 
-snakes::GameMessage ProtobufManager::create_game_message(
+snakes::GameMessage ProtobufManager::create_game_message_proto(
         const GameMessage& message
 ) {
     snakes::GameMessage game_message_proto;
@@ -195,7 +194,7 @@ void ProtobufManager::set_message(snakes::GameMessage &snakes_game_message, cons
             if (steer_message) {
                 auto* steer_msg = new snakes::GameMessage::SteerMsg;
                 steer_msg->set_direction(
-                        get_snakes_direction(
+                        get_snakes_direction_proto(
                                 steer_message->get_direction())
                                 );
                 snakes_game_message.set_allocated_steer(steer_msg);
@@ -225,7 +224,7 @@ void ProtobufManager::set_message(snakes::GameMessage &snakes_game_message, cons
                 auto* allocated_state_msg = new snakes::GameMessage::StateMsg;
                 auto* allocated_game_state = new snakes::GameState;
                 allocated_game_state->CopyFrom(
-                        create_game_state(
+                        create_game_state_proto(
                                 state_message->get_game_state())
                         );
                 allocated_state_msg->set_allocated_state(allocated_game_state);
@@ -258,7 +257,7 @@ void ProtobufManager::set_message(snakes::GameMessage &snakes_game_message, cons
                 auto *allocated_join_msg =
                         new snakes::GameMessage::JoinMsg;
                 allocated_join_msg->CopyFrom(
-                        create_join_message(*join_message)
+                        create_join_message_proto(*join_message)
                         );
                 snakes_game_message.set_allocated_join(allocated_join_msg);
             } else {
@@ -287,11 +286,11 @@ void ProtobufManager::set_message(snakes::GameMessage &snakes_game_message, cons
             if (role_changing_message) {
                 auto *allocated_role_change_msg = new snakes::GameMessage::RoleChangeMsg;
                 allocated_role_change_msg->set_receiver_role(
-                        get_snakes_node_role(
+                        get_snakes_node_role_proto(
                                 role_changing_message->get_receiver_role())
                         );
                 allocated_role_change_msg->set_sender_role(
-                        get_snakes_node_role(
+                        get_snakes_node_role_proto(
                                 role_changing_message->get_sender_role())
                 );
                 snakes_game_message.set_allocated_role_change(allocated_role_change_msg);
@@ -316,21 +315,21 @@ void ProtobufManager::set_message(snakes::GameMessage &snakes_game_message, cons
     }
 }
 
-snakes::GameMessage::JoinMsg ProtobufManager::create_join_message(const JoinMessage &message) {
+snakes::GameMessage::JoinMsg ProtobufManager::create_join_message_proto(const JoinMessage &message) {
     snakes::GameMessage::JoinMsg join_msg_proto;
     join_msg_proto.set_player_type(
-            ProtobufManager::get_snakes_player_type(message.get_player_type())
+            ProtobufManager::get_snakes_player_type_proto(message.get_player_type())
             );
     join_msg_proto.set_player_name(message.get_player_name());
     join_msg_proto.set_game_name(message.get_game_name());
     join_msg_proto.set_requested_role(
-            ProtobufManager::get_snakes_node_role(message.get_node_role())
+            ProtobufManager::get_snakes_node_role_proto(message.get_node_role())
             );
 
     return join_msg_proto;
 }
 
-snakes::NodeRole ProtobufManager::get_snakes_node_role(NodeRole role) {
+snakes::NodeRole ProtobufManager::get_snakes_node_role_proto(NodeRole role) {
     switch (role) {
 
         case NodeRole::Normal: return snakes::NodeRole::NORMAL;
@@ -345,11 +344,11 @@ snakes::NodeRole ProtobufManager::get_snakes_node_role(NodeRole role) {
     }
 }
 
-snakes::GamePlayers ProtobufManager::create_game_players_array(const std::vector<GamePlayer> &players) {
+snakes::GamePlayers ProtobufManager::create_game_players_array_proto(const std::vector<GamePlayer> &players) {
     snakes::GamePlayers game_players_proto;
 
     for (const GamePlayer& player : players) {
-        *game_players_proto.add_players() = ProtobufManager::create_game_player(player);
+        *game_players_proto.add_players() = ProtobufManager::create_game_player_proto(player);
     }
 
     return game_players_proto;

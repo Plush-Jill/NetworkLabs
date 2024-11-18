@@ -75,10 +75,10 @@ Item {
             value: ConfigEditor.get_field_width();
             onValueChanged: {
                 ConfigEditor.update_config(
-                    field_width_slider.value.toString(),
-                    field_height_slider.value.toString(),
-                    food_static_slider.value.toString(),
-                    state_delay_slider.value.toString()
+                    field_width_slider.value,
+                    field_height_slider.value,
+                    food_static_slider.value,
+                    state_delay_slider.value
                 );
             }
         }
@@ -131,10 +131,10 @@ Item {
             value: ConfigEditor.get_field_height();
             onValueChanged: {
                 ConfigEditor.update_config(
-                    field_width_slider.value.toString(),
-                    field_height_slider.value.toString(),
-                    food_static_slider.value.toString(),
-                    state_delay_slider.value.toString()
+                    field_width_slider.value,
+                    field_height_slider.value,
+                    food_static_slider.value,
+                    state_delay_slider.value
                 );
             }
         }
@@ -186,10 +186,10 @@ Item {
             value: ConfigEditor.get_food_static();
             onValueChanged: {
                 ConfigEditor.update_config(
-                    field_width_slider.value.toString(),
-                    field_height_slider.value.toString(),
-                    food_static_slider.value.toString(),
-                    state_delay_slider.value.toString()
+                    field_width_slider.value,
+                    field_height_slider.value,
+                    food_static_slider.value,
+                    state_delay_slider.value
                 );
             }
         }
@@ -240,10 +240,10 @@ Item {
             value: ConfigEditor.get_state_delay_ms();
             onValueChanged: {
                 ConfigEditor.update_config(
-                    field_width_slider.value.toString(),
-                    field_height_slider.value.toString(),
-                    food_static_slider.value.toString(),
-                    state_delay_slider.value.toString()
+                    field_width_slider.value,
+                    field_height_slider.value,
+                    food_static_slider.value,
+                    state_delay_slider.value
                 );
             }
         }

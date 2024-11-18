@@ -16,57 +16,57 @@
 
 class ProtobufManager {
 public:
-    static snakes::GameAnnouncement create_announcement(
+    static snakes::GameAnnouncement create_announcement_proto(
             const GameAnnouncement &announcement
             );
 
-    static snakes::GameState::Coord create_coord(
+    static snakes::GameState::Coord create_coord_proto(
             CoordPoint coord_point
             );
 
-    static snakes::GameConfig create_game_config(
+    static snakes::GameConfig create_game_config_proto(
             const GameConfig& config
             );
 
-    static snakes::GamePlayer create_game_player(
+    static snakes::GamePlayer create_game_player_proto(
             const GamePlayer& game_player
             );
 
-    static snakes::GamePlayers add_game_players(
+    static snakes::GamePlayers add_game_players_proto(
             const std::vector<snakes::GamePlayer>& players
             );
 
-    static snakes::GamePlayers create_game_players_array(
+    static snakes::GamePlayers create_game_players_array_proto(
             const std::vector<GamePlayer>& players
     );
 
-    static snakes::GameState create_game_state(
+    static snakes::GameState create_game_state_proto(
             const GameState& state
             );
 
-    static snakes::Direction get_snakes_direction(
+    static snakes::Direction get_snakes_direction_proto(
             Direction direction
             );
 
-    static snakes::GameState::Snake::SnakeState get_snakes_state(
+    static snakes::GameState::Snake::SnakeState get_snakes_state_proto(
             SnakeState state
     );
 
-    static snakes::PlayerType get_snakes_player_type(
+    static snakes::PlayerType get_snakes_player_type_proto(
             PlayerType type
     );
 
-    static snakes::GamePlayers create_game_players(
+    static snakes::GamePlayers create_game_players_proto(
             const std::vector<GamePlayer>& players
     );
 
-    static snakes::GameMessage create_game_message(
+    static snakes::GameMessage create_game_message_proto(
             const GameMessage& message
             );
-    static snakes::GameMessage::JoinMsg create_join_message(
+    static snakes::GameMessage::JoinMsg create_join_message_proto(
             const JoinMessage& message
             );
-    static snakes::NodeRole get_snakes_node_role(
+    static snakes::NodeRole get_snakes_node_role_proto(
             NodeRole role
             );
 

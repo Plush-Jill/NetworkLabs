@@ -10,20 +10,20 @@
 boost::filesystem::path ConfigEditor::m_absolute_config_path;
 
 
-void ConfigEditor::update_config(const QString &field_width,
-                                 const QString &field_height,
-                                 const QString &food_static,
-                                 const QString &state_delay
+void ConfigEditor::update_config(const int &field_width,
+                                 const int &field_height,
+                                 const int &food_static,
+                                 const int &state_delay
                                 ) {
     boost::property_tree::ptree config;
     boost::property_tree::ini_parser::read_ini(
             ConfigEditor::m_absolute_config_path.string(),
             config);
 
-    config.put("field_size.width", field_width.toStdString());
-    config.put("field_size.height", field_height.toStdString());
-    config.put("food.food_static", food_static.toStdString());
-    config.put("state.state_delay_ms", state_delay.toStdString());
+    config.put("field_size.width", field_width);
+    config.put("field_size.height", field_height);
+    config.put("food.food_static", food_static);
+    config.put("state.state_delay_ms", state_delay);
 
     boost::property_tree::write_ini(
             ConfigEditor::m_absolute_config_path.string(),

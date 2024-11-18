@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>resources/image.png</file>
         <file>resources/Snake_Game_Window/Snake_Game_WindowContent/App.qml</file>
     </qresource>
 </RCC>

@@ -40,12 +40,14 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-
+set(PROTOBUF_GENERATED_SRC_DIR "${CMAKE_SOURCE_DIR}/src")
+set(PROTOBUF_GENERATED_HDR_DIR "${CMAKE_SOURCE_DIR}/include")
 
 find_package(Qt6 6.8 REQUIRED COMPONENTS Core Gui Qml Quick Qml)
 find_package(Protobuf REQUIRED)
 find_package(OpenGL REQUIRED)
 
+protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS snakes.proto)
 
 include_directories(${PROTOBUF_INCLUDE_DIRS})
 
@@ -76,8 +78,10 @@ qt_add_executable(appSnake_Game
         include/entity/game_state.hpp
         src/entity/game_announcement.cpp
         include/entity/game_announcement.hpp
-        snakes.pb.cc
-        snakes.pb.h
+
+        ${PROTO_SRCS}
+        ${PROTO_HDRS}
+
         src/entity/game_messages/game_message.cpp
         include/entity/game_messages/game_message.hpp
         src/entity/game_messages/abstract_message.cpp
@@ -110,12 +114,12 @@ qt_add_executable(appSnake_Game
         include/game_model.hpp
         src/announcement_sender.cpp
         include/announcement_sender.hpp
-)
 
-#qt6_add_resources(SNAKE_GAME_RESOURCES appSnake_Game_resources.qrc)
-#qt6_add_resources(appSnake_Game_RESOURCES appSnake_Game_resources.qrc)
-#qt6_add_resources(appSnake_Game_resources "${CMAKE_SOURCE_DIR}/qrc_appSnake_Game_resources.qrc")
-#message(${CMAKE_SOURCE_DIR})
+        include/entities.hpp
+        include/entity/game_messages.hpp
+        include/enums.hpp
+        include/utils.hpp
+)
 
 qt6_add_resources(RESOURCES appSnake_Game_resources.qrc)
 
@@ -136,17 +140,6 @@ qt_add_qml_module(appSnake_Game
     VERSION 1.0
     QML_FILES
         resources/Snake_Game_Window/Snake_Game_WindowContent/MainMenu.qml
-#        resources/Snake_Game_Window/Snake_Game_Window.qmlproject
-#        resources/Snake_Game_Window/qtquickcontrols2.conf
-#        resources/Snake_Game_Window/Snake_Game_WindowContent/App.qml
-#        resources/Snake_Game_Window/Snake_Game_WindowContent/MainMenu.qml
-#        resources/Snake_Game_Window/Snake_Game_WindowContent/fonts/fonts.txt
-#        resources/Snake_Game_Window/Snake_Game_Window/Constants.qml
-#        resources/Snake_Game_Window/Snake_Game_Window/EventListModel.qml
-#        resources/Snake_Game_Window/Snake_Game_Window/EventListSimulator.qml
-#        resources/Snake_Game_Window/Snake_Game_Window/qmldir
-#        resources/Snake_Game_Window/Snake_Game_Window/designer/plugin.metainfo
-#        /resources/Snake_Game_Window/Snake_Game_WindowContent/MainMenu.qml
 )
 set_source_files_properties(
         "./resources/Snake_Game_Window/Snake_Game_WindowContent/MainMenu.qml"
@@ -166,8 +159,8 @@ set_target_properties(appSnake_Game PROPERTIES
 
 #add_library(appSnake_Game_resources SHARED ${SNAKE_GAME_RESOURCES})
 
-target_link_libraries(appSnake_Game
-    PRIVATE Qt6::Quick
+target_link_libraries(appSnake_Game PRIVATE
+        Qt6::Quick
         ${PROTOBUF_LIBRARIES}
         Qt6::Quick
         Qt6::Qml
@@ -190,3 +183,55 @@ install(TARGETS appSnake_Game
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+
+
+add_executable(test_target
+
+        main_test.cpp
+
+        ${PROTO_SRCS}
+        ${PROTO_HDRS}
+
+        include/entities.hpp
+        include/entity/game_messages.hpp
+        include/util/protobuf_manager.hpp
+        include/enums.hpp
+
+        src/entity/snake.cpp
+        include/entity/snake.hpp
+        src/entity/snake_segment.cpp
+        include/entity/snake_segment.hpp
+
+        src/entity/coord_point.cpp
+        src/util/protobuf_manager.cpp
+        src/entity/game_player.cpp
+        src/entity/game_config.cpp
+        src/entity/game_state.cpp
+        src/entity/game_announcement.cpp
+        src/entity/game_messages/game_message.cpp
+        src/entity/game_messages/abstract_message.cpp
+        src/entity/game_messages/ping_message.cpp
+        src/entity/game_messages/steer_message.cpp
+        src/entity/game_messages/ack_message.cpp
+        src/entity/game_messages/state_message.cpp
+        src/entity/game_messages/announcement_message.cpp
+        src/entity/game_messages/discover_message.cpp
+        src/entity/game_messages/join_message.cpp
+        src/entity/game_messages/error_message.cpp
+        src/entity/game_messages/role_change_message.cpp
+)
+
+target_link_libraries(test_target PRIVATE
+        ${PROTOBUF_LIBRARIES}
+        protobuf::libprotobuf
+        boost_filesystem
+)
+
+install(TARGETS test_target
+        BUNDLE DESTINATION .
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+target_include_directories(test_target PRIVATE "./include")

@@ -16,7 +16,7 @@ private:
     std::chrono::milliseconds m_state_delay_ms = std::chrono::milliseconds(1000);
     
 public:
-    explicit GameConfig() {};
+    explicit GameConfig() = default;
     GameConfig(const GameConfig& other);
     GameConfig& operator=(const GameConfig& right);
 

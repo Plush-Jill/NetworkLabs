@@ -4,42 +4,34 @@
 
 #include "include/entity/snake.hpp"
 
-const SnakeSegment &Snake::get_head() const {
-    return head_;
+const std::vector<CoordPoint> &Snake::get_segments() const {
+    return m_segments;
 }
 
-void Snake::set_head(const SnakeSegment &head) {
-    head_ = head;
-}
-
-const std::vector<SnakeSegment> &Snake::get_segments() const {
-    return segments_;
-}
-
-void Snake::set_segments(const std::vector<SnakeSegment> &segments) {
-    segments_ = segments;
+void Snake::set_segments(const std::vector<CoordPoint> &segments) {
+    m_segments = segments;
 }
 
 SnakeState Snake::get_snake_state() const {
-    return snake_state_;
+    return m_snake_state;
 }
 
 void Snake::set_snake_state(SnakeState snake_state) {
-    snake_state_ = snake_state;
+    m_snake_state = snake_state;
 }
 
 int Snake::get_id() const {
-    return id_;
+    return m_id;
 }
 
 void Snake::set_id(int id) {
-    id_ = id;
+    m_id = id;
 }
 
 Direction Snake::get_head_direction() const {
-    return head_direction_;
+    return m_head_direction;
 }
 
 void Snake::set_head_direction(Direction head_direction) {
-    head_direction_ = head_direction;
+    m_head_direction = head_direction;
 }

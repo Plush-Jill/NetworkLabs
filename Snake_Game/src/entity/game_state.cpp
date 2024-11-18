@@ -5,33 +5,33 @@
 #include "include/entity/game_state.hpp"
 
 const std::vector<GamePlayer> &GameState::get_game_players() const {
-    return game_players_;
+    return m_game_players;
 }
 
 void GameState::set_game_players(const std::vector<GamePlayer> &game_players) {
-    game_players_ = game_players;
+    m_game_players = game_players;
 }
 
 const std::set<CoordPoint> &GameState::get_foods() const {
-    return foods_;
+    return m_foods;
 }
 
 void GameState::set_foods(const std::set<CoordPoint> &foods) {
-    foods_ = foods;
+    m_foods = foods;
 }
 
 const std::vector<Snake> &GameState::get_snakes() const {
-    return snakes_;
+    return m_snakes;
 }
 
 void GameState::set_snakes(const std::vector<Snake> &snakes) {
-    snakes_ = snakes;
+    m_snakes = snakes;
 }
 
 int GameState::get_state_order() const {
-    return state_order_;
+    return m_state_order;
 }
 
 void GameState::set_state_order(int state_order) {
-    state_order_ = state_order;
+    m_state_order = state_order;
 }

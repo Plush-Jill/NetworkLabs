@@ -13,15 +13,26 @@
 
 class GamePlayer {
 private:
-    std::string name_;
-    int id_;
-    boost::asio::ip::address ip_address_;
-    boost::asio::ip::port_type port_;
-    NodeRole node_role_;
-    PlayerType type_;
-    int score_;
+    std::string m_name;
+    int m_id;
+    boost::asio::ip::address m_ip_address;
+    boost::asio::ip::port_type m_port;
+    NodeRole m_node_role;
+    PlayerType m_type;
+    int m_score;
 
 public:
+    explicit GamePlayer(
+        std::string name,
+        int id,
+        boost::asio::ip::address  ip_address,
+        boost::asio::ip::port_type port,
+        NodeRole node_role,
+        PlayerType type,
+        int score
+        );
+
+    GamePlayer();
     [[nodiscard]] const std::string &get_name() const;
     [[nodiscard]] int get_id() const;
     [[nodiscard]] const boost::asio::ip::address &get_ip_address() const;

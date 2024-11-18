@@ -39,10 +39,10 @@ public:
     explicit ConfigEditor(QObject *parent = nullptr);
 
     Q_INVOKABLE void update_config(
-            const QString &field_width,
-            const QString &field_height,
-            const QString &food_static,
-            const QString &state_delay
+            const int &field_width,
+            const int &field_height,
+            const int &food_static,
+            const int &state_delay
     );
     Q_INVOKABLE int get_field_width();
     Q_INVOKABLE int get_field_height();

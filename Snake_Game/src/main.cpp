@@ -11,29 +11,6 @@
 #include <boost/dll.hpp>
 #include "util/protobuf_manager.hpp"
 
-void test_serializer() {
-    CoordPoint coord_point = CoordPoint(2, 33);
-    snakes::GameState::Coord coord_proto = ProtobufManager::create_coord(coord_point);
-    coord_proto.set_x(41);
-    coord_proto.set_y(2);
-    std::string serialized_data;
-    coord_proto.SerializeToString(&serialized_data);
-    if (coord_proto.SerializeToString(&serialized_data)) {
-        std::cout << "Successfully serialized" << std::endl;
-        std::cout << "Serialized data: " << serialized_data << std::endl;
-    } else {
-        std::cerr << "Serializing error" << std::endl;
-    }
-
-    snakes::GameState::Coord parsed_coord_proto;
-    if (parsed_coord_proto.ParseFromString(serialized_data)) {
-        std::cout << boost::format("Coord: (%1%, %2%)")
-                     % parsed_coord_proto.x()
-                     % parsed_coord_proto.y() << std::endl;
-    } else {
-        std::cerr << "Deserialization error" << std::endl;
-    }
-}
 
 Q_DECL_EXPORT int main(int argc, char *argv[]) {
 
