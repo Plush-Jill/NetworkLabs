@@ -85,6 +85,8 @@ Item {
             checkable: false
             autoRepeat: false
             autoExclusive: false
+
+            onClicked: loader.source = "GameWindow.qml" // Переход к игре
         }
 
         Button {

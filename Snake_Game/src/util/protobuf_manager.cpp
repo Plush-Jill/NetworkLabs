@@ -88,6 +88,9 @@ snakes::GameState ProtobufManager::create_game_state_proto(
         *game_state_proto.add_foods() = ProtobufManager::create_coord_proto(food);
     }
 
+    *game_state_proto.mutable_players() = ProtobufManager::create_game_players_proto(
+            state.get_game_players());
+
     return game_state_proto;
 
 }

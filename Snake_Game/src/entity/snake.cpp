@@ -2,6 +2,8 @@
 // Created by plushjill on 03.11.2024.
 //
 
+#include <utility>
+
 #include "include/entity/snake.hpp"
 
 const std::vector<CoordPoint> &Snake::get_segments() const {
@@ -34,4 +36,17 @@ Direction Snake::get_head_direction() const {
 
 void Snake::set_head_direction(Direction head_direction) {
     m_head_direction = head_direction;
+}
+
+Snake::Snake(
+        int id,
+        std::vector<CoordPoint> segments,
+        SnakeState snake_state,
+        Direction head_direction) :
+            m_id (id),
+            m_segments (std::move(segments)),
+            m_snake_state (snake_state),
+            m_head_direction (head_direction)
+         {
+
 }

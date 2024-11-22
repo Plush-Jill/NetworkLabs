@@ -19,7 +19,12 @@ private:
 
 public:
     Snake() = default;
-
+    Snake (
+        int id,
+        std::vector<CoordPoint> segments,
+        SnakeState snake_state,
+        Direction head_direction
+    );
     [[nodiscard]] int get_id() const;
     [[nodiscard]] const std::vector<CoordPoint> &get_segments() const;
     [[nodiscard]] SnakeState get_snake_state() const;

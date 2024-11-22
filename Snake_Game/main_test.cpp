@@ -26,7 +26,7 @@ int main() {
         std::string deserialized_data;
         game_player_proto_deserialized.SerializeToString(&deserialized_data);
         if (deserialized_data == serialized_data) {
-            std::cout << "Test passed" << std::endl;
+            std::cout << "Test passed (GamePlayer)" << std::endl;
         }
     } else {
         std::cerr << "Deserialization error" << std::endl;
@@ -50,7 +50,7 @@ int main() {
         std::string deserialized_data;
         game_config_proto_deserialized.SerializeToString(&deserialized_data);
         if (deserialized_data == serialized_data) {
-            std::cout << "Test passed" << std::endl;
+            std::cout << "Test passed (GameConfig)" << std::endl;
         }
     } else {
         std::cerr << "Deserialization error" << std::endl;
@@ -59,7 +59,21 @@ int main() {
 
 
 
-    GameState game_state {};
+    CoordPoint point1 (1, 2);
+    CoordPoint point2 (1, 3);
+    CoordPoint point3 (1, 4);
+    std::vector<CoordPoint> snake_segments {point1, point2};
+    std::vector<CoordPoint> foods {point2, point3};
+    std::vector<GamePlayer> players {game_player};
+
+    Snake snake (0,
+                 snake_segments,
+                 SnakeState::Alive,
+                 Direction::Up);
+
+    std::vector<Snake> snakes {snake};
+
+    GameState game_state (0, snakes, foods, players);
     snakes::GameState game_state_proto = ProtobufManager::create_game_state_proto(
             game_state
     );
@@ -73,7 +87,7 @@ int main() {
         std::string deserialized_data;
         game_state_proto_deserialized.SerializeToString(&deserialized_data);
         if (deserialized_data == serialized_data) {
-            std::cout << "Test passed" << std::endl;
+            std::cout << "Test passed (GameState)" << std::endl;
         }
     } else {
         std::cerr << "Deserialization error" << std::endl;

@@ -7,7 +7,6 @@
 #include <QtQml/qqmlregistration.h>
 #include <iostream>
 #include <boost/filesystem.hpp>
-#include <boost/format.hpp>
 #include <boost/dll.hpp>
 #include "util/protobuf_manager.hpp"
 

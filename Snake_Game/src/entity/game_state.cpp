@@ -12,11 +12,11 @@ void GameState::set_game_players(const std::vector<GamePlayer> &game_players) {
     m_game_players = game_players;
 }
 
-const std::set<CoordPoint> &GameState::get_foods() const {
+const std::vector<CoordPoint> &GameState::get_foods() const {
     return m_foods;
 }
 
-void GameState::set_foods(const std::set<CoordPoint> &foods) {
+void GameState::set_foods(const std::vector<CoordPoint> &foods) {
     m_foods = foods;
 }
 
@@ -34,4 +34,17 @@ int GameState::get_state_order() const {
 
 void GameState::set_state_order(int state_order) {
     m_state_order = state_order;
+}
+
+GameState::GameState(
+        int state_order,
+        const std::vector<Snake>& snakes,
+        const std::vector<CoordPoint>& foods,
+        const std::vector<GamePlayer>& game_players) :
+        m_state_order (state_order),
+        m_snakes (snakes),
+        m_foods (foods),
+        m_game_players (game_players)
+        {
+
 }
