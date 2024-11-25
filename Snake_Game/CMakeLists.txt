@@ -169,7 +169,7 @@ target_link_libraries(test_target PRIVATE
         protobuf::libprotobuf
         boost_filesystem
         gtest_main
-        corelib
+#        corelib
 )
 
 install(TARGETS test_target
