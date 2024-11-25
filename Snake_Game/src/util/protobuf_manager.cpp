@@ -67,15 +67,13 @@ snakes::GameState ProtobufManager::create_game_state_proto(
 
         new_snake_proto->set_player_id(snake.get_id());
 
-//        CoordPoint previous_point = snake.get_segments()[0];
-        std::stack<CoordPoint> segments_copy {snake.get_segments()};
+        CoordPoint previous_point = snake.get_segments()[0];
 
-        CoordPoint previous_point = segments_copy.top();
-        segments_copy.pop();
-        while (!segments_copy.empty()) {
-            CoordPoint next_point = segments_copy.top();
+        for (CoordPoint point : snake.get_segments()) {
+            CoordPoint next_point = point;
             *new_snake_proto->add_points() = ProtobufManager::create_coord_proto(
                     next_point.get_shift_from(previous_point));
+
             previous_point = next_point;
         }
 

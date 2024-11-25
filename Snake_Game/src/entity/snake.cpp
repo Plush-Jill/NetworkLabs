@@ -6,11 +6,11 @@
 
 #include "include/entity/snake.hpp"
 
-const std::stack<CoordPoint> &Snake::get_segments() const {
+const std::deque<CoordPoint> &Snake::get_segments() const {
     return m_segments;
 }
 
-void Snake::set_segments(const std::stack<CoordPoint> &segments) {
+void Snake::set_segments(const std::deque<CoordPoint> &segments) {
     m_segments = segments;
 }
 
@@ -40,7 +40,7 @@ void Snake::set_head_direction(Direction head_direction) {
 
 Snake::Snake(
         int id,
-        std::stack<CoordPoint> segments,
+        std::deque<CoordPoint> segments,
         SnakeState snake_state,
         Direction head_direction) :
             m_id (id),
