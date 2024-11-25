@@ -11,22 +11,12 @@ cmake_minimum_required(VERSION 3.16)
 project(Snake_Game VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 
-# Указываем компиляторы
-set(CMAKE_CXX_COMPILER "/usr/bin/g++")
-set(CMAKE_C_COMPILER "/usr/bin/gcc")
-
 # Путь к qmake и Qt
-set(QT_QMAKE_EXECUTABLE "/home/plushjill/Qt/6.8.0/gcc_64/bin/qmake")
-set(CMAKE_PREFIX_PATH "/home/plushjill/Qt/6.8.0/gcc_64")
-
-# Используем генератор Ninja
-set(CMAKE_GENERATOR "Ninja")
-
-# Указываем тип сборки
-set(CMAKE_BUILD_TYPE "Debug")
+#set(QT_QMAKE_EXECUTABLE "/home/plushjill/Qt/6.8.0/gcc_64/bin/qmake")
+#set(CMAKE_PREFIX_PATH "/home/plushjill/Qt/6.8.0/gcc_64")
 
 # Указываем путь к автоконфигурации
-set(CMAKE_PROJECT_INCLUDE_BEFORE "${CMAKE_BINARY_DIR}/Desktop_Qt_6_8_0-Debug/.qtc/package-manager/auto-setup.cmake")
+#set(CMAKE_PROJECT_INCLUDE_BEFORE "${CMAKE_BINARY_DIR}/Desktop_Qt_6_8_0-Debug/.qtc/package-manager/auto-setup.cmake")
 
 
 
@@ -128,34 +118,34 @@ set_target_properties(appSnake_Game PROPERTIES
 )
 #qt6_add_resources(qrc_srcs ${CMAKE_CURRENT_SOURCE_DIR}/appSnake_Game_resources.qrc)
 
-set_source_files_properties(
-        "./resources/Snake_Game_Window/Snake_Game_WindowContent/App.qml"
-        PROPERTIES QT_RESOURCE_ALIAS App.qml
-)
+#set_source_files_properties(
+#        "./resources/Snake_Game_Window/Snake_Game_WindowContent/App.qml"
+#        PROPERTIES QT_RESOURCE_ALIAS App.qml
+#)
 
 add_library(qrc STATIC ${qrc_srcs})
 
-qt_add_qml_module(appSnake_Game
-    URI Snake_Game
-    VERSION 1.0
-    QML_FILES
-        resources/Snake_Game_Window/Snake_Game_WindowContent/MainMenu.qml
-)
-set_source_files_properties(
-        "./resources/Snake_Game_Window/Snake_Game_WindowContent/MainMenu.qml"
-        PROPERTIES QT_RESOURCE_ALIAS MainMenu.qml
-)
+#qt_add_qml_module(appSnake_Game
+#    URI Snake_Game
+#    VERSION 1.0
+#    QML_FILES
+#        resources/Snake_Game_Window/Snake_Game_WindowContent/MainMenu.qml
+#)
+#set_source_files_properties(
+#        "./resources/Snake_Game_Window/Snake_Game_WindowContent/MainMenu.qml"
+#        PROPERTIES QT_RESOURCE_ALIAS MainMenu.qml
+#)
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
 
-set_target_properties(appSnake_Game PROPERTIES
-#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appSnake_Game
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
-)
+#set_target_properties(appSnake_Game PROPERTIES
+##    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appSnake_Game
+#    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+#    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+#    MACOSX_BUNDLE TRUE
+#    WIN32_EXECUTABLE TRUE
+#)
 
 #add_library(appSnake_Game_resources SHARED ${SNAKE_GAME_RESOURCES})
 
@@ -221,6 +211,21 @@ add_executable(test_target
         src/entity/game_messages/error_message.cpp
         src/entity/game_messages/role_change_message.cpp
 )
+
+if(POLICY CMP0135)
+    cmake_policy(SET CMP0135 NEW)
+    set(CMAKE_POLICY_DEFAULT_CMP0135 NEW)
+endif()
+
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        # Specify the commit you depend on and update it regularly.
+        URL https://github.com/google/googletest/archive/58d77fa8070e8cec2dc1ed015d66b454c8d78850.zip
+)
+#
+#set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+#FetchContent_MakeAvailable(googletest)
 
 target_link_libraries(test_target PRIVATE
         ${PROTOBUF_LIBRARIES}
