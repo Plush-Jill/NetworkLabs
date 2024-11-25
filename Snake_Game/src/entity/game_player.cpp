@@ -3,7 +3,7 @@
 //
 
 #include <utility>
-
+#include "util/protobuf_manager.hpp"
 #include "include/entity/game_player.hpp"
 
 const std::string &GamePlayer::get_name() const {
@@ -82,4 +82,29 @@ GamePlayer::GamePlayer() :
         m_score(1488)
 {
 
+}
+
+GamePlayer::GamePlayer(const snakes::GamePlayer& game_player_proto) :
+    GamePlayer(
+            game_player_proto.name(),
+            game_player_proto.id(),
+            boost::asio::ip::address::from_string(game_player_proto.ip_address()),
+            game_player_proto.port(),
+            ProtobufManager::get_node_role(game_player_proto.role()),
+            ProtobufManager::get_type(game_player_proto.type()),
+            game_player_proto.score()
+            ) {
+}
+
+bool GamePlayer::operator==(const GamePlayer &other) const {
+    bool result =
+            m_name == other.m_name &&
+            m_id == other.m_id &&
+            m_ip_address == other.m_ip_address &&
+            m_port == other.m_port &&
+            m_node_role == other.m_node_role &&
+            m_type == other.m_type &&
+            m_score == other.m_score;
+
+    return result;
 }

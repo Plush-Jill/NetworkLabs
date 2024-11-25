@@ -4,7 +4,7 @@
 
 #ifndef SNAKE_GAME_COORD_POINT_HPP
 #define SNAKE_GAME_COORD_POINT_HPP
-
+#include "snakes.pb.h"
 
 class CoordPoint {
 private:
@@ -13,7 +13,7 @@ private:
 
 public:
     explicit CoordPoint(int x, int y);
-
+    explicit CoordPoint(const snakes::GameState_Coord& coord);
     [[nodiscard]] int get_x() const;
     [[nodiscard]] int get_y() const;
     void set_x(int x);

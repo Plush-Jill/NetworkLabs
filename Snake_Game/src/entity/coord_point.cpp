@@ -22,3 +22,7 @@ void CoordPoint::set_y(int y) {
 
 CoordPoint::CoordPoint(int x, int y) :
         m_x(x), m_y(y) {}
+
+CoordPoint::CoordPoint(const snakes::GameState_Coord& coord)
+    : CoordPoint(coord.x(), coord.y()) {
+}

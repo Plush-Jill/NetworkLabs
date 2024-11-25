@@ -9,7 +9,7 @@
 #include "include/enum/node_role.hpp"
 #include "include/enum/player_type.hpp"
 #include <boost/asio.hpp>
-
+#include "snakes.pb.h"
 
 class GamePlayer {
 private:
@@ -31,8 +31,11 @@ public:
         PlayerType type,
         int score
         );
-
+    explicit GamePlayer(const snakes::GamePlayer& game_player_proto);
     GamePlayer();
+
+    bool operator==(const GamePlayer& other) const;
+
     [[nodiscard]] const std::string &get_name() const;
     [[nodiscard]] int get_id() const;
     [[nodiscard]] const boost::asio::ip::address &get_ip_address() const;
@@ -44,11 +47,8 @@ public:
     void set_port(boost::asio::ip::port_type port);
     void set_node_role(NodeRole node_role);
     void set_type(PlayerType type);
-    void set_score(int score);
 
-    bool operator==(const GamePlayer& other) {
-        return true;
-    }
+    void set_score(int score);
 };
 
 

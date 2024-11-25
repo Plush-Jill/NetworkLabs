@@ -67,13 +67,15 @@ snakes::GameState ProtobufManager::create_game_state_proto(
 
         new_snake_proto->set_player_id(snake.get_id());
 
-        CoordPoint previous_point = snake.get_segments()[0];
+//        CoordPoint previous_point = snake.get_segments()[0];
+        std::stack<CoordPoint> segments_copy {snake.get_segments()};
 
-        for (CoordPoint point : snake.get_segments()) {
-            CoordPoint next_point = point;
+        CoordPoint previous_point = segments_copy.top();
+        segments_copy.pop();
+        while (!segments_copy.empty()) {
+            CoordPoint next_point = segments_copy.top();
             *new_snake_proto->add_points() = ProtobufManager::create_coord_proto(
                     next_point.get_shift_from(previous_point));
-
             previous_point = next_point;
         }
 
@@ -357,3 +359,25 @@ snakes::GamePlayers ProtobufManager::create_game_players_array_proto(const std::
     return game_players_proto;
 }
 
+NodeRole ProtobufManager::get_node_role(snakes::NodeRole node_role_proto) {
+    switch (node_role_proto) {
+
+        case snakes::NORMAL:
+            return NodeRole::Normal;
+        case snakes::MASTER:
+            return NodeRole::Master;
+        case snakes::DEPUTY:
+            return NodeRole::Deputy;
+        case snakes::VIEWER:
+            return NodeRole::Viewer;
+    }
+}
+
+PlayerType ProtobufManager::get_type(snakes::PlayerType player_type_proto) {
+    switch (player_type_proto) {
+        case snakes::HUMAN:
+            return PlayerType::Human;
+        case snakes::ROBOT:
+            return PlayerType::Robot;
+    }
+}

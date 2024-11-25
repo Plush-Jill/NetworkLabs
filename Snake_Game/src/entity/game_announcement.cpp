@@ -30,3 +30,10 @@ const GameConfig &GameAnnouncement::get_config() const {
 bool GameAnnouncement::is_can_join() const {
     return m_can_join;
 }
+
+GameAnnouncement::GameAnnouncement() {
+    m_players = std::vector<GamePlayer>(0);
+    m_config = GameConfig();
+    m_can_join = false;
+    m_game_name = "unnamed";
+}

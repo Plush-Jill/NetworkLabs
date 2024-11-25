@@ -53,3 +53,20 @@ GameConfig &GameConfig::operator=(const GameConfig &right) {
     }
     return *this;
 }
+
+GameConfig::GameConfig(const snakes::GameConfig& game_config) :
+    m_field_width(game_config.width()),
+    m_field_height(game_config.height()),
+    m_food_static(game_config.food_static()),
+    m_state_delay_ms(game_config.state_delay_ms()) {
+
+}
+
+bool GameConfig::operator==(GameConfig &other) {
+    bool result = m_field_width == other.m_field_width &&
+            m_field_height == other.m_field_height &&
+            m_food_static == other.m_food_static &&
+            m_state_delay_ms == other.m_state_delay_ms;
+
+    return result;
+}

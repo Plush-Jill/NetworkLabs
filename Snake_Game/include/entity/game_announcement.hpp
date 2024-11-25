@@ -13,7 +13,7 @@ class GameAnnouncement {
 private:
     std::vector<GamePlayer> m_players;
     GameConfig m_config;
-    bool m_can_join;
+    bool m_can_join{};
     std::string m_game_name;
 
 public:
@@ -21,7 +21,7 @@ public:
                      const GameConfig& config,
                      bool can_join,
                      const std::string& game_name);
-    GameAnnouncement() {};
+    GameAnnouncement();
 
     [[nodiscard]] const std::vector<GamePlayer> &get_players() const;
     [[nodiscard]] const std::string &get_game_name() const;

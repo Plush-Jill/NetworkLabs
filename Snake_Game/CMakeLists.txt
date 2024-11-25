@@ -86,6 +86,8 @@ qt_add_executable(appSnake_Game
         include/entity/game_messages.hpp
         include/enums.hpp
         include/utils.hpp
+        include/model/game_field.cpp
+        include/model/game_field.hpp
 )
 
 target_link_libraries(appSnake_Game PRIVATE
@@ -148,7 +150,8 @@ add_executable(test_target
         src/entity/game_messages/error_message.cpp
         src/entity/game_messages/role_change_message.cpp
         test/protobuf_manager_test.cpp
-        test/protobuf_manager_test.hpp
+        include/model/game_field.cpp
+        include/model/game_field.hpp
 )
 
 if(POLICY CMP0135)

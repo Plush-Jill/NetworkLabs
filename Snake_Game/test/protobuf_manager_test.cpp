@@ -2,7 +2,7 @@
 #include "util/protobuf_manager.hpp"
 
 
-TEST(ProtobufManagerTests, GamePlayerToProtoTest) {
+TEST(ProtobufManagerTests, create_game_player_proto) {
     GamePlayer game_player {};
 
     snakes::GamePlayer game_player_proto =
@@ -14,12 +14,15 @@ TEST(ProtobufManagerTests, GamePlayerToProtoTest) {
     snakes::GamePlayer game_player_proto_deserialized;
     EXPECT_TRUE(game_player_proto_deserialized.ParseFromString(serialized_data));
 
+    GamePlayer game_player_from_proto {game_player_proto_deserialized};
+    EXPECT_TRUE(game_player_from_proto == game_player);
+
     std::string deserialized_data;
     game_player_proto_deserialized.SerializeToString(&deserialized_data);
     EXPECT_TRUE(deserialized_data == serialized_data);
 }
 
-TEST(ProtobufManagerTests, GameConfigToProtoTest) {
+TEST(ProtobufManagerTests, create_game_config_proto) {
     std::string serialized_data;
     GameConfig game_config {};
     snakes::GameConfig game_config_proto = ProtobufManager::create_game_config_proto(
@@ -31,12 +34,16 @@ TEST(ProtobufManagerTests, GameConfigToProtoTest) {
     snakes::GameConfig game_config_proto_deserialized;
     EXPECT_TRUE(game_config_proto_deserialized.ParseFromString(serialized_data));
 
+    GameConfig game_config_from_proto {game_config_proto_deserialized};
+
+    EXPECT_TRUE(game_config == game_config_from_proto);
+
     std::string deserialized_data;
     game_config_proto_deserialized.SerializeToString(&deserialized_data);
     EXPECT_TRUE(deserialized_data == serialized_data);
 }
 
-TEST(ProtobufManagerTests, GameStateToProtoTest) {
+TEST(ProtobufManagerTests, create_game_state_proto) {
     std::string serialized_data;
     GamePlayer game_player {};
 
@@ -68,5 +75,23 @@ TEST(ProtobufManagerTests, GameStateToProtoTest) {
 
     std::string deserialized_data;
     game_state_proto_deserialized.SerializeToString(&deserialized_data);
+    EXPECT_TRUE(deserialized_data == serialized_data);
+}
+
+
+TEST(ProtobufManagerTests, create_announcement_proto) {
+    std::string serialized_data;
+    GameAnnouncement game_announcement;
+    snakes::GameAnnouncement game_announcement_proto =
+            ProtobufManager::create_announcement_proto(game_announcement);
+
+    EXPECT_TRUE(game_announcement_proto.SerializeToString(&serialized_data));
+
+
+    snakes::GameAnnouncement game_announcement_proto_deserialized;
+    EXPECT_TRUE(game_announcement_proto_deserialized.ParseFromString(serialized_data));
+
+    std::string deserialized_data;
+    EXPECT_TRUE(game_announcement_proto_deserialized.SerializeToString(&deserialized_data));
     EXPECT_TRUE(deserialized_data == serialized_data);
 }

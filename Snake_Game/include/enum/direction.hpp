@@ -6,10 +6,12 @@
 #define SNAKE_GAME_DIRECTION_HPP
 
 enum class Direction {
-    Up = 1,     // Вверх (в отрицательном направлении оси y)
-    Down = 2,   // Вниз (в положительном направлении оси y)
-    Left = 3,   // Влево (в отрицательном направлении оси x)
-    Right = 4  // Вправо (в положительном направлении оси x)
+    Up = 1,
+    Down = 2,
+    Left = 3,
+    Right = 4
 };
+
+
 
 #endif //SNAKE_GAME_DIRECTION_HPP

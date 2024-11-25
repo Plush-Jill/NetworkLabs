@@ -24,10 +24,16 @@ public:
             CoordPoint coord_point
             );
 
+    /**
+     * @tested true
+     */
     static snakes::GameConfig create_game_config_proto(
             const GameConfig& config
             );
 
+    /**
+     * @tested true
+     */
     static snakes::GamePlayer create_game_player_proto(
             const GamePlayer& game_player
             );
@@ -40,6 +46,9 @@ public:
             const std::vector<GamePlayer>& players
     );
 
+    /**
+    * @tested true
+    */
     static snakes::GameState create_game_state_proto(
             const GameState& state
             );
@@ -70,6 +79,13 @@ public:
             NodeRole role
             );
 
+    static NodeRole get_node_role(
+            snakes::NodeRole node_role_proto
+            );
+
+    static PlayerType get_type(
+            snakes::PlayerType player_type_proto
+    );
     static void set_message(snakes::GameMessage &snakes_game_message, const GameMessage &message);
 };
 

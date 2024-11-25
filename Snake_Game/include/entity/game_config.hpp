@@ -6,7 +6,7 @@
 #define SNAKE_GAME_GAME_CONFIG_HPP
 
 #include <chrono>
-
+#include "snakes.pb.h"
 
 class GameConfig {
 private:
@@ -19,6 +19,9 @@ public:
     explicit GameConfig() = default;
     GameConfig(const GameConfig& other);
     GameConfig& operator=(const GameConfig& right);
+    GameConfig(const snakes::GameConfig& game_config);
+
+    bool operator==(GameConfig &other);
 
     [[nodiscard]] const std::chrono::milliseconds &get_state_delay_ms() const;
     [[nodiscard]] int get_food_static() const;
