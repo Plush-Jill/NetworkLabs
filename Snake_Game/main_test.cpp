@@ -5,7 +5,12 @@
 #include <iostream>
 #include "util/protobuf_manager.hpp"
 #include "entities.hpp"
+#include "gtest/gtest.h"
 
+
+TEST (, ) {
+
+}
 
 int main() {
 
