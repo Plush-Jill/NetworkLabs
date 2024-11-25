@@ -88,6 +88,8 @@ qt_add_executable(appSnake_Game
         include/utils.hpp
         include/model/game_field.cpp
         include/model/game_field.hpp
+        include/exceptions/incomplete_code_exception.hpp
+        include/exceptions_all.hpp
 )
 
 target_link_libraries(appSnake_Game PRIVATE
@@ -152,6 +154,8 @@ add_executable(test_target
         test/protobuf_manager_test.cpp
         include/model/game_field.cpp
         include/model/game_field.hpp
+        include/exceptions/incomplete_code_exception.hpp
+        include/exceptions_all.hpp
 )
 
 if(POLICY CMP0135)

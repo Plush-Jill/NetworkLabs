@@ -22,6 +22,8 @@ private:
             const CoordPoint& coord) const;
 
     void destroy_snake(Snake snake);
+    bool is_point_contains_food(const CoordPoint& coord);
+    bool is_point_contains_snake(const CoordPoint& coord);
 
 public:
 

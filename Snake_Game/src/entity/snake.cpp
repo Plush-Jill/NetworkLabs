@@ -50,3 +50,7 @@ Snake::Snake(
          {
 
 }
+
+CoordPoint Snake::get_head_coord() const {
+    return m_segments[0];
+}

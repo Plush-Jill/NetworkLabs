@@ -1,7 +1,7 @@
 //
 // Created by plushjill on 25.11.2024.
 //
-
+#include "exceptions_all.hpp"
 #include "game_field.hpp"
 
 GameField::GameField(const GameConfig& game_config, std::vector<Snake>& snakes) :
@@ -13,11 +13,23 @@ GameField::GameField(const GameConfig& game_config, std::vector<Snake>& snakes) 
 }
 
 void GameField::move_snakes() {
-    for (Snake snake : m_snakes) {
+    throw IncompleteCodeException();
+    for (Snake& snake : m_snakes) {
         CoordPoint shift = get_shift_by_direction(snake.get_head_direction());
-        CoordPoint next_head_point = snake.
-        for (CoordPoint segment : snake.get_segments()) {
+        CoordPoint next_head_point = snake.get_head_coord() + shift;
 
+        bool is_contains_food = is_point_contains_food(next_head_point);
+        bool is_contains_snake = is_point_contains_snake(next_head_point);
+
+        if (is_contains_food) {
+            snake.grow();
+        } else if (is_contains_snake) {
+            destroy_snake(snake);
+        } else {
+            for (CoordPoint segment: snake.get_segments()) {
+                // сдвинуть голову, затем поменять сдвиг второй клетки,
+                // затем поменять сдвиги всех остальных
+            }
         }
     }
 }

@@ -27,6 +27,9 @@ public:
     bool operator!=(const CoordPoint& other) const {
         return this != &other;
     }
+    CoordPoint operator+(const CoordPoint& other) const {
+        return CoordPoint(m_x + other.m_x, m_y + other.m_y);
+    }
 };
 
 
