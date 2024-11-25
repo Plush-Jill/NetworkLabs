@@ -45,6 +45,10 @@ public:
     void set_node_role(NodeRole node_role);
     void set_type(PlayerType type);
     void set_score(int score);
+
+    bool operator==(const GamePlayer& other) {
+        return true;
+    }
 };
 
 

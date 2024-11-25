@@ -74,7 +74,7 @@ qt_add_executable(appSnake_Game
         include/entity/game_messages/role_change_message.hpp
         resources/Snake_Game_Window/Snake_Game_WindowContent/App.qml
         src/main_window_controller.cpp
-        src/main_window_controller.hpp
+        include/main_window_controller.hpp
         src/util/config_editor.cpp
         include/util/config_editor.hpp
         src/game_model.cpp
@@ -115,7 +115,7 @@ install(TARGETS appSnake_Game
 
 add_executable(test_target
 
-        main_test.cpp
+        test/main_test.cpp
 
         ${PROTO_SRCS}
         ${PROTO_HDRS}
@@ -147,6 +147,8 @@ add_executable(test_target
         src/entity/game_messages/join_message.cpp
         src/entity/game_messages/error_message.cpp
         src/entity/game_messages/role_change_message.cpp
+        test/protobuf_manager_test.cpp
+        test/protobuf_manager_test.hpp
 )
 
 if(POLICY CMP0135)
@@ -169,7 +171,6 @@ target_link_libraries(test_target PRIVATE
         protobuf::libprotobuf
         boost_filesystem
         gtest_main
-#        corelib
 )
 
 install(TARGETS test_target
