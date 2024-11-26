@@ -86,13 +86,13 @@ qt_add_executable(appSnake_Game
         include/entity/game_messages.hpp
         include/enums.hpp
         include/utils.hpp
-        include/model/game_field.cpp
+        src/model/game_field.cpp
         include/model/game_field.hpp
         include/exceptions/incomplete_code_exception.hpp
         include/exceptions_all.hpp
-        include/controller/snake_controller.cpp
+        src/controller/snake_controller.cpp
         include/controller/snake_controller.hpp
-        include/model/game_model.cpp
+        src/model/game_model.cpp
         include/model/game_model.hpp
 )
 
@@ -156,10 +156,11 @@ add_executable(test_target
         src/entity/game_messages/error_message.cpp
         src/entity/game_messages/role_change_message.cpp
         test/protobuf_manager_test.cpp
-        include/model/game_field.cpp
+        src/model/game_field.cpp
         include/model/game_field.hpp
         include/exceptions/incomplete_code_exception.hpp
         include/exceptions_all.hpp
+        test/coord_point_test.cpp
 )
 
 if(POLICY CMP0135)

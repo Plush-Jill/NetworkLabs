@@ -26,6 +26,7 @@ public:
     [[nodiscard]] const std::vector<CoordPoint> &get_foods() const;
     [[nodiscard]] const std::vector<Snake> &get_snakes() const;
     [[nodiscard]] int get_state_order() const;
+    [[nodiscard]] std::shared_ptr<Snake> get_snake(int snake_id);
     void set_game_players(const std::vector<GamePlayer> &game_players);
     void set_foods(const std::vector<CoordPoint> &foods);
     void set_snakes(const std::vector<Snake> &snakes);

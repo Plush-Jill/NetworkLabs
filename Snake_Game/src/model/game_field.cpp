@@ -2,7 +2,7 @@
 // Created by plushjill on 25.11.2024.
 //
 #include "exceptions_all.hpp"
-#include "game_field.hpp"
+#include "include/model/game_field.hpp"
 
 GameField::GameField(const GameConfig& game_config, std::vector<Snake>& snakes) :
     m_game_config(game_config),

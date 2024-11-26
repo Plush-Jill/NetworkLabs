@@ -17,7 +17,21 @@ private:
 
 
 public:
-    Q_INVOKABLE void turn_head(std::string& direction);
+    explicit SnakeController(
+            std::shared_ptr<Snake> snake,
+            QObject* parent = nullptr);
+
+    [[nodiscard]] int get_snake_id();
+
+    enum class HeadDirection {
+        Up,
+        Down,
+        Left,
+        Right
+    };
+
+    Q_ENUM(HeadDirection) // Указывает, что enum будет доступен в QML
+    Q_INVOKABLE void turn_head(SnakeController::HeadDirection direction);
 
 };
 

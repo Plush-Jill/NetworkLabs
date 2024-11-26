@@ -48,3 +48,13 @@ GameState::GameState(
         {
 
 }
+
+std::shared_ptr<Snake> GameState::get_snake(int snake_id) {
+    for (Snake& snake : m_snakes) {
+        if (snake.get_id() == snake_id) {
+            return std::shared_ptr<Snake>(&snake);
+        }
+    }
+
+    return nullptr;
+}
