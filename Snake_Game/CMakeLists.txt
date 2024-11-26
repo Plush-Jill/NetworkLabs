@@ -90,6 +90,10 @@ qt_add_executable(appSnake_Game
         include/model/game_field.hpp
         include/exceptions/incomplete_code_exception.hpp
         include/exceptions_all.hpp
+        include/controller/snake_controller.cpp
+        include/controller/snake_controller.hpp
+        include/model/game_model.cpp
+        include/model/game_model.hpp
 )
 
 target_link_libraries(appSnake_Game PRIVATE
