@@ -33,8 +33,8 @@ public:
     }
     [[nodiscard]] Direction get_relative_direction_from(const CoordPoint& other) const {
         CoordPoint shift = this->get_shift_from(other);
-        int x = shift.m_x == 0 ? 0 : (shift.m_x < 0 ? -1 : 1);
-        int y = shift.m_y == 0 ? 0 : (shift.m_y < 0 ? -1 : 1);
+        int x = shift.m_x == 0 ? 0 : (shift.m_x > 0 ? 1 : -1);
+        int y = shift.m_y == 0 ? 0 : (shift.m_y > 0 ? 1 : -1);
 
         if (x == 0 && y == 1) {
             return Direction::Down;

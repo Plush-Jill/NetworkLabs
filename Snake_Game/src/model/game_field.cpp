@@ -71,5 +71,6 @@ CoordPoint GameField::get_shift_by_direction(Direction direction) {
             return CoordPoint(0, -1);
         case Direction::Right:
             return CoordPoint(0, 1);
+        default: throw std::invalid_argument("invalid direction");
     }
 }
