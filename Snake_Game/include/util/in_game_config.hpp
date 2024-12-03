@@ -6,6 +6,7 @@
 #define SNAKE_GAME_IN_GAME_CONFIG_HPP
 #include <QObject>
 #include <QtCore>
+#include <QColor>
 
 class InGameConfig : public QObject {
     Q_OBJECT
@@ -25,6 +26,14 @@ public:
 
     Q_INVOKABLE int get_field_height() {
         return m_field_height;
+    }
+
+    Q_INVOKABLE QColor get_cell_color(int index) {
+        if (index == 2) {
+            return {"red"};
+        }
+
+        return {"blue"};
     }
 };
 

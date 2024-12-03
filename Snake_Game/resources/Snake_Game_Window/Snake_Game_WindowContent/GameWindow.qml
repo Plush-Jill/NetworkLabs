@@ -91,7 +91,7 @@ Item {
             delegate: Rectangle {
                 width: gameGrid1.width / grid_width
                 height: gameGrid1.height / grid_height
-                color: "red"
+                color: InGameConfig.get_cell_color(index);
                 border.color: "#000000"
             }
         }
