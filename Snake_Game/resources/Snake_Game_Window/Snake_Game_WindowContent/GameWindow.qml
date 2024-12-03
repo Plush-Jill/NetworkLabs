@@ -46,27 +46,26 @@ Item {
             delegate: Rectangle {
                 width: 50
                 height: 50
-                color: InGameFieldState.get_cell_color(index);
+                // color: InGameFieldState.get_cell_color(index);
+                color: "white"
                 border.color: "#000000"
-
+                // on_cell_changed: {
+                //     update_color();
+                // }
                 function update_color() {
                     console.log("item at " + index + " updated");
                     color = InGameFieldState.get_cell_color(index);
                 }
-            }
-        }
+                Connections {
+                    target: InGameFieldState
 
-        Connections {
-            target: InGameFieldState
-            function on_cell_changed(index) {
-                console.log("Cell at index " + index + " trying to update.");
-                var item = field_cell_repeater.itemAt(index);
-                if (item) {
-                    item.update_color();
-                } else {
-                    console.warn("Cell at index " + index + " is not available yet.");
+                    function onCellUpdated(idx) {
+                        var rect = in_game_field.children[idx];
+                        rect.color = InGameFieldState.get_cell_color(idx);
+                    }
                 }
             }
         }
     }
+
 }

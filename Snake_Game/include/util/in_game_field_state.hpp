@@ -30,13 +30,9 @@ public:
         return m_field_cell_height;
     }
 
-    bool changed = false;
-
+    int red_cell_index {};
     Q_INVOKABLE QColor get_cell_color(int index) {
-        if (changed && index == 3) {
-            return {"red"};
-        }
-        if (!changed && index == 2) {
+        if (index == red_cell_index) {
             return {"red"};
         }
 
@@ -44,18 +40,17 @@ public:
     }
 
     void update_field() {
-        changed = true;
         for (int i {}; i < m_field_cell_height * m_field_cell_width; ++i) {
             update_cell(i);
         }
+        red_cell_index = (red_cell_index + 1) % 10;
     }
 
     void update_cell(int index) {
-        emit on_cell_changed(index);
-        std::cout << std::format("update_cell(): item at {} updated", index) << std::endl;
+        emit cellUpdated(index);
     }
 signals:
-    void on_cell_changed(int index);
+    void cellUpdated(int index);
 };
 
 

@@ -12,9 +12,10 @@
 #include "util/in_game_field_state.hpp"
 
 void foo (InGameFieldState* state) {
-    sleep(5);
-    state->update_field();
-    std::cout << "field updated" << std::endl;
+    while (1) {
+        usleep(90000);
+        state->update_field();
+    }
 }
 
 Q_DECL_EXPORT int main(int argc, char *argv[]) {
