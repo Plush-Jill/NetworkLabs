@@ -96,8 +96,8 @@ qt_add_executable(appSnake_Game
         include/model/game_model.hpp
         include/grid_model.cpp
         include/grid_model.hpp
-        include/util/in_game_config.cpp
-        include/util/in_game_config.hpp
+        include/util/in_game_field_state.cpp
+        include/util/in_game_field_state.hpp
 )
 
 target_link_libraries(appSnake_Game PRIVATE

@@ -9,7 +9,13 @@
 #include <boost/filesystem.hpp>
 #include <boost/dll.hpp>
 #include "util/protobuf_manager.hpp"
-#include "util/in_game_config.hpp"
+#include "util/in_game_field_state.hpp"
+
+void foo (InGameFieldState* state) {
+    sleep(5);
+    state->update_field();
+    std::cout << "field updated" << std::endl;
+}
 
 Q_DECL_EXPORT int main(int argc, char *argv[]) {
 
@@ -20,12 +26,18 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
 
     QGuiApplication app(argc, argv);
 
-    QQmlApplicationEngine engine(QUrl::fromLocalFile(qml_app_path.string().c_str()));
+    QUrl app_url = QUrl::fromLocalFile(qml_app_path.string().c_str());
 
-    auto* in_game_config = new InGameConfig;
-    engine.rootContext()->setContextProperty("InGameConfig", in_game_config);
+    QQmlApplicationEngine engine;
+
+    auto* in_game_field_state = new InGameFieldState;
+    engine.rootContext()->setContextProperty("InGameFieldState", in_game_field_state);
     auto* config_editor = new ConfigEditor;
     engine.rootContext()->setContextProperty("ConfigEditor", config_editor);
 
+
+    std::thread thread(foo, in_game_field_state);
+
+    engine.load(app_url);
     return QGuiApplication::exec();
 }
