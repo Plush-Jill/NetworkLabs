@@ -9,7 +9,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/dll.hpp>
 #include "util/protobuf_manager.hpp"
-
+#include "util/in_game_config.hpp"
 
 Q_DECL_EXPORT int main(int argc, char *argv[]) {
 
@@ -22,6 +22,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
 
     QQmlApplicationEngine engine(QUrl::fromLocalFile(qml_app_path.string().c_str()));
 
+    auto* in_game_config = new InGameConfig;
+    engine.rootContext()->setContextProperty("InGameConfig", in_game_config);
     auto* config_editor = new ConfigEditor;
     engine.rootContext()->setContextProperty("ConfigEditor", config_editor);
 

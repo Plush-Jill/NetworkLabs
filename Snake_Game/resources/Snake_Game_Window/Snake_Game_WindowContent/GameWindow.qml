@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtCore
+import QtQml.Models
 
 
 Item {
@@ -33,9 +34,9 @@ Item {
 
     ListModel {
         id: cell_model
-        Component.onCompleted: {
-            reset_grid(grid_width, grid_height)
-        }
+        // Component.onCompleted: {
+        //     reset_grid(grid_width, grid_height)
+        // }
     }
 
     function reset_grid(width, height) {
@@ -60,10 +61,21 @@ Item {
         }
     }
 
+    ListModel {
+        id: game_field_grid_model
+
+    }
+
+
+
+
+
     Grid {
         id: gameGrid1
-        columns: grid_width
-        rows: grid_height
+        // columns: grid_width
+        // rows: grid_height
+        columns: InGameConfig.get_field_width()
+        rows: InGameConfig.get_field_height()
         x: 434
         y: 124
         width: 830
@@ -72,16 +84,14 @@ Item {
         columnSpacing: 2
 
         Repeater {
-            // model: cell_model
-            // model: cell_model.columnCount() * cell_model.rowCount()
-            // model: cell_model.count
-            model: grid_width * grid_height
+            // model: grid_width * grid_height
+            model: InGameConfig.get_field_height() * InGameConfig.get_field_width()
+            // model: 3 * 5
 
             delegate: Rectangle {
                 width: gameGrid1.width / grid_width
                 height: gameGrid1.height / grid_height
-                color: cell_model.get(index).hasFood ? "red" :
-                       (cell_model.get(index).snakeSegment ? "green" : "lightgray")
+                color: "red"
                 border.color: "#000000"
             }
         }
@@ -114,25 +124,25 @@ Item {
         onClicked: reset_grid(grid_width, grid_height)
     }
 
-    Grid {
-        id: gameGrid
-        x: 1409
-        y: 513
-        width: 451
-        height: 410
-        rows: 8
-        rowSpacing: -2
-        columns: 8
-        columnSpacing: -2
-
-        Repeater {
-            model: gameGrid.columns * gameGrid.rows
-            Rectangle {
-                width: 50
-                height: 50
-                color: "#d3d3d3"
-                border.color: "#000000"
-            }
-        }
-    }
+    // Grid {
+    //     id: gameGrid
+    //     x: 1409
+    //     y: 513
+    //     width: 451
+    //     height: 410
+    //     rows: 8
+    //     rowSpacing: -2
+    //     columns: 8
+    //     columnSpacing: -2
+    //
+    //     Repeater {
+    //         model: gameGrid.columns * gameGrid.rows
+    //         Rectangle {
+    //             width: 50
+    //             height: 50
+    //             color: "#d3d3d3"
+    //             border.color: "#000000"
+    //         }
+    //     }
+    // }
 }
