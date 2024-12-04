@@ -34,6 +34,7 @@ public:
     [[nodiscard]] int get_food_static() const;
     [[nodiscard]] int get_field_height() const;
     [[nodiscard]] int get_field_width() const;
+    [[nodiscard]] std::shared_ptr<GameState> get_game_state() const;
 
     void move_snakes();
 };

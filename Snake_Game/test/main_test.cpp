@@ -20,10 +20,6 @@ public:
     }
 };
 
-void process(const std::shared_ptr<int>& ptr) {
-    std::cout << "Processing: " << *ptr << "\n";
-}
-
 //int main() {
 //    std::shared_ptr<int> number {std::make_shared<int>(5)};
 //    Base base {number};

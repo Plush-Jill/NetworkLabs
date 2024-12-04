@@ -31,6 +31,15 @@ public:
     CoordPoint operator+(const CoordPoint& other) const {
         return CoordPoint(m_x + other.m_x, m_y + other.m_y);
     }
+    bool operator<(const CoordPoint& other) const {
+        if (m_x == other.m_x && m_y == other.m_y) {
+            return false;
+        }
+        if (m_x < other.m_x || m_y < other.m_y) {
+            return true;
+        }
+        return false;
+    }
     [[nodiscard]] Direction get_relative_direction_from(const CoordPoint& other) const {
         CoordPoint shift = this->get_shift_from(other);
         int x = shift.m_x == 0 ? 0 : (shift.m_x > 0 ? 1 : -1);

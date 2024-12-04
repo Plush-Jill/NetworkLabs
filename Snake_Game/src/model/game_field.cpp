@@ -78,7 +78,11 @@ CoordPoint GameField::get_shift_by_direction(Direction direction) {
 }
 
 bool GameField::is_cell_contains_food(const CoordPoint &cell) {
-//    return std::ranges::any_of(m_game_state->get_foods().get(), [cell](const CoordPoint& point) {
-//       return point == cell;
-//    });
+    return std::ranges::any_of(*m_game_state->get_foods(), [cell](const CoordPoint& point) {
+       return point == cell;
+    });
+}
+
+std::shared_ptr<GameState> GameField::get_game_state() const {
+    return m_game_state;
 }
