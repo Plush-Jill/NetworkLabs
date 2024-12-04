@@ -11,9 +11,8 @@
 
 class GameModel {
 private:
-    GameConfig m_game_config;
-    GameField m_game_field;
-    GameState m_game_state;
+    std::shared_ptr<GameConfig> m_game_config;
+    std::shared_ptr<GameField> m_game_field;
 
 
 public:

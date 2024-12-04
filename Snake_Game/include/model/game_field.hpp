@@ -8,13 +8,13 @@
 
 #include "entity/game_config.hpp"
 #include "entity/snake.hpp"
+#include "entity/game_state.hpp"
 
 class GameField {
 private:
 
-    const GameConfig m_game_config;
-    std::vector<Snake> m_snakes;
-    std::set<CoordPoint> m_food_points;
+    std::shared_ptr<GameConfig> m_game_config;
+    std::shared_ptr<GameState> m_game_state;
 
     static CoordPoint get_shift_by_direction(Direction direction);
     static int num_by_size_module(int num, int module);
@@ -22,15 +22,15 @@ private:
             const CoordPoint& coord) const;
 
     void destroy_snake(Snake snake);
-    bool is_point_contains_food(const CoordPoint& coord);
     bool is_point_contains_snake(const CoordPoint& coord);
 
 public:
 
     GameField() = default;
-    GameField(const GameConfig& game_config, std::vector<Snake> &snakes);
+    GameField(std::shared_ptr<GameConfig> game_config, std::shared_ptr<GameState> game_state);
 
-    [[nodiscard]] const std::chrono::milliseconds &get_state_delay_ms() const;
+    bool is_cell_contains_food(const CoordPoint& cell);
+    [[nodiscard]] std::chrono::milliseconds get_state_delay_ms() const;
     [[nodiscard]] int get_food_static() const;
     [[nodiscard]] int get_field_height() const;
     [[nodiscard]] int get_field_width() const;

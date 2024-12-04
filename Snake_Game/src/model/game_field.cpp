@@ -1,12 +1,14 @@
 //
 // Created by plushjill on 25.11.2024.
 //
+#include <utility>
+
 #include "exceptions_all.hpp"
 #include "include/model/game_field.hpp"
 
-GameField::GameField(const GameConfig& game_config, std::vector<Snake>& snakes) :
-    m_game_config(game_config),
-    m_snakes(snakes)
+GameField::GameField(std::shared_ptr<GameConfig> game_config, std::shared_ptr<GameState> game_state) :
+    m_game_config(std::move(game_config)),
+    m_game_state(std::move(game_state))
     {
 
 
@@ -14,11 +16,11 @@ GameField::GameField(const GameConfig& game_config, std::vector<Snake>& snakes) 
 
 void GameField::move_snakes() {
     throw IncompleteCodeException();
-    for (Snake& snake : m_snakes) {
+    for (Snake& snake : *m_game_state->get_snakes()) {
         CoordPoint shift = get_shift_by_direction(snake.get_head_direction());
         CoordPoint next_head_point = snake.get_head_coord() + shift;
 
-        bool is_contains_food = is_point_contains_food(next_head_point);
+        bool is_contains_food = is_cell_contains_food(next_head_point);
         bool is_contains_snake = is_point_contains_snake(next_head_point);
 
         if (is_contains_food) {
@@ -26,7 +28,7 @@ void GameField::move_snakes() {
         } else if (is_contains_snake) {
             destroy_snake(snake);
         } else {
-            for (CoordPoint segment: snake.get_segments()) {
+            for (CoordPoint segment: *snake.get_segments()) {
                 // сдвинуть голову, затем поменять сдвиг второй клетки,
                 // затем поменять сдвиги всех остальных
             }
@@ -34,20 +36,20 @@ void GameField::move_snakes() {
     }
 }
 
-const std::chrono::milliseconds &GameField::get_state_delay_ms() const {
-    return m_game_config.get_state_delay_ms();
+std::chrono::milliseconds GameField::get_state_delay_ms() const {
+    return m_game_config->get_state_delay_ms();
 }
 
 int GameField::get_food_static() const {
-    return m_game_config.get_food_static();
+    return m_game_config->get_food_static();
 }
 
 int GameField::get_field_height() const {
-    return m_game_config.get_field_height();
+    return m_game_config->get_field_height();
 }
 
 int GameField::get_field_width() const {
-    return m_game_config.get_field_width();
+    return m_game_config->get_field_width();
 }
 
 CoordPoint GameField::get_coords_by_field_size_module(const CoordPoint &coord) const {
@@ -73,4 +75,10 @@ CoordPoint GameField::get_shift_by_direction(Direction direction) {
             return CoordPoint(0, 1);
         default: throw std::invalid_argument("invalid direction");
     }
+}
+
+bool GameField::is_cell_contains_food(const CoordPoint &cell) {
+//    return std::ranges::any_of(m_game_state->get_foods().get(), [cell](const CoordPoint& point) {
+//       return point == cell;
+//    });
 }

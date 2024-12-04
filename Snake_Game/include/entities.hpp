@@ -11,7 +11,6 @@
 #include "entity/game_player.hpp"
 #include "entity/game_state.hpp"
 #include "entity/snake.hpp"
-#include "entity/snake_segment.hpp"
 #include "entity/game_messages.hpp"
 
 

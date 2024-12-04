@@ -51,6 +51,7 @@ Item {
             color: "#ffffff"
             text: "field width"
             horizontalAlignment: Text.AlignHCenter
+            font.family: "Comic Sans MS"
             selectByMouse: false
             cursorVisible: true
             readOnly: true
@@ -89,6 +90,7 @@ Item {
             color: "#ffffff"
             text: field_width_slider.value
             horizontalAlignment: Text.AlignHCenter
+            font.family: "Comic Sans MS"
             persistentSelection: true
             activeFocusOnPress: false
             cursorVisible: true
@@ -109,6 +111,7 @@ Item {
             color: "#ffffff"
             text: "field height"
             horizontalAlignment: Text.AlignHCenter
+            font.family: "Comic Sans MS"
             selectByMouse: false
             activeFocusOnPress: true
             overwriteMode: false
@@ -146,6 +149,7 @@ Item {
             color: "#ffffff"
             text: field_height_slider.value
             horizontalAlignment: Text.AlignHCenter
+            font.family: "Comic Sans MS"
             persistentSelection: true
             cursorVisible: true
             activeFocusOnPress: false
@@ -166,6 +170,7 @@ Item {
             color: "#ffffff"
             text: "food static"
             horizontalAlignment: Text.AlignHCenter
+            font.family: "Comic Sans MS"
             selectByMouse: false
             readOnly: true
             cursorVisible: true
@@ -200,6 +205,7 @@ Item {
             color: "#ffffff"
             text: food_static_slider.value
             horizontalAlignment: Text.AlignHCenter
+            font.family: "Comic Sans MS"
             persistentSelection: true
             cursorVisible: true
             activeFocusOnPress: false
@@ -220,6 +226,7 @@ Item {
             color: "#ffffff"
             text: "state_delay (ms)"
             horizontalAlignment: Text.AlignHCenter
+            font.family: "Comic Sans MS"
             selectByMouse: false
             readOnly: true
             cursorVisible: true
@@ -254,6 +261,7 @@ Item {
             color: "#ffffff"
             text: state_delay_slider.value
             horizontalAlignment: Text.AlignHCenter
+            font.family: "Comic Sans MS"
             persistentSelection: true
             cursorVisible: true
             activeFocusOnPress: false

@@ -16,6 +16,10 @@ Window {
 
 
     Loader {
+        x: 0
+        y: 0
+        height: 1
+        width: 1
         id: loader
         anchors.fill: parent
         source: "MainMenu.qml"

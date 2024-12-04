@@ -9,7 +9,8 @@
 #include <boost/filesystem.hpp>
 #include <boost/dll.hpp>
 #include "util/protobuf_manager.hpp"
-#include "util/in_game_field_state.hpp"
+#include "include/in_game_field_state.hpp"
+
 
 void foo (InGameFieldState* state) {
     while (1) {
@@ -26,7 +27,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
             "resources/Snake_Game_Window/Snake_Game_WindowContent/App.qml";
 
     QGuiApplication app(argc, argv);
-
+    QFontDatabase::addApplicationFont((absolute_exec_path.parent_path().parent_path() /
+                                        "resources/Comic Sans MS.ttf").string().c_str());
     QUrl app_url = QUrl::fromLocalFile(qml_app_path.string().c_str());
 
     QQmlApplicationEngine engine;
@@ -36,9 +38,11 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
     auto* config_editor = new ConfigEditor;
     engine.rootContext()->setContextProperty("ConfigEditor", config_editor);
 
-
-    std::thread thread(foo, in_game_field_state);
-
     engine.load(app_url);
+
+//    std::thread thread(foo, in_game_field_state);
+//    QGuiApplication::exec();
+//    thread.join();
+//    return 0;
     return QGuiApplication::exec();
 }

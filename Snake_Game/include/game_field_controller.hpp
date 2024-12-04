@@ -6,17 +6,14 @@
 #define SNAKE_GAME_GAME_FIELD_CONTROLLER_HPP
 #include <cstddef>
 #include "include/entity/snake.hpp"
+#include "model/game_field.hpp"
 #include <vector>
 #include <chrono>
 
 
 class GameFieldController {
 private:
-    size_t field_width_;
-    size_t field_height_;
-    size_t tick_count_;
-    std::chrono::milliseconds tick_time_ {1000};
-    std::vector<Snake> snakes_;
+    std::shared_ptr<GameField> m_game_field;
 };
 
 

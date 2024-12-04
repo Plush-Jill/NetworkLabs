@@ -62,14 +62,14 @@ snakes::GameState ProtobufManager::create_game_state_proto(
     game_state_proto.set_state_order(state.get_state_order());
 
 
-    for (const Snake& snake : state.get_snakes()) {
+    for (const Snake& snake : *state.get_snakes()) {
         snakes::GameState::Snake* new_snake_proto = game_state_proto.add_snakes();
 
         new_snake_proto->set_player_id(snake.get_id());
 
-        CoordPoint previous_point = snake.get_segments()[0];
+        CoordPoint previous_point = snake.get_segments()->at(0);
 
-        for (CoordPoint point : snake.get_segments()) {
+        for (CoordPoint point : *snake.get_segments()) {
             CoordPoint next_point = point;
             *new_snake_proto->add_points() = ProtobufManager::create_coord_proto(
                     next_point.get_shift_from(previous_point));
@@ -84,12 +84,12 @@ snakes::GameState ProtobufManager::create_game_state_proto(
                         snake.get_head_direction()));
     }
 
-    for (const CoordPoint& food : state.get_foods()) {
+    for (const CoordPoint& food : *state.get_foods()) {
         *game_state_proto.add_foods() = ProtobufManager::create_coord_proto(food);
     }
 
     *game_state_proto.mutable_players() = ProtobufManager::create_game_players_proto(
-            state.get_game_players());
+            *state.get_game_players());
 
     return game_state_proto;
 

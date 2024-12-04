@@ -21,14 +21,13 @@ include_directories(${PROTOBUF_INCLUDE_DIRS})
 
 qt_standard_project_setup(REQUIRES 6.8)
 
-qt_add_executable(appSnake_Game
+#qt_add_executable(appSnake_Game
+add_executable(appSnake_Game
         src/main.cpp
         src/game_field_controller.cpp
         include/game_field_controller.hpp
         src/entity/snake.cpp
         include/entity/snake.hpp
-        src/entity/snake_segment.cpp
-        include/entity/snake_segment.hpp
         src/entity/coord_point.cpp
         include/entity/coord_point.hpp
         src/util/protobuf_manager.cpp
@@ -77,8 +76,6 @@ qt_add_executable(appSnake_Game
         include/main_window_controller.hpp
         src/util/config_editor.cpp
         include/util/config_editor.hpp
-        src/game_model.cpp
-        include/game_model.hpp
         src/announcement_sender.cpp
         include/announcement_sender.hpp
 
@@ -94,10 +91,9 @@ qt_add_executable(appSnake_Game
         include/controller/snake_controller.hpp
         src/model/game_model.cpp
         include/model/game_model.hpp
-        include/grid_model.cpp
-        include/grid_model.hpp
-        include/util/in_game_field_state.cpp
-        include/util/in_game_field_state.hpp
+        src/in_game_field_state.cpp
+        include/in_game_field_state.hpp
+        include/enum/cell_content.hpp
 )
 
 target_link_libraries(appSnake_Game PRIVATE
@@ -139,8 +135,6 @@ add_executable(test_target
 
         src/entity/snake.cpp
         include/entity/snake.hpp
-        src/entity/snake_segment.cpp
-        include/entity/snake_segment.hpp
 
         src/entity/coord_point.cpp
         src/util/protobuf_manager.cpp
@@ -165,6 +159,7 @@ add_executable(test_target
         include/exceptions/incomplete_code_exception.hpp
         include/exceptions_all.hpp
         test/coord_point_test.cpp
+        test/game_field_test.cpp
 )
 
 if(POLICY CMP0135)

@@ -77,7 +77,7 @@ Item {
             height: 90
             text: "Host new game"
             font.pointSize: 26
-            font.family: "Arial"
+            font.family: "Comic Sans MS"
             flat: false
             enabled: true
             display: AbstractButton.TextBesideIcon
@@ -95,7 +95,7 @@ Item {
             height: 90
             text: "Join game"
             font.pointSize: 26
-            font.family: "Arial"
+            font.family: "Comic Sans MS"
             flat: false
             enabled: true
             display: AbstractButton.TextBesideIcon
@@ -111,7 +111,7 @@ Item {
             height: 90
             text: "Options (edit config)"
             font.pointSize: 26
-            font.family: "Arial"
+            font.family: "Comic Sans MS"
             flat: false
             enabled: true
             display: AbstractButton.TextBesideIcon
@@ -128,7 +128,7 @@ Item {
             height: 90
             text: "Exit"
             font.pointSize: 26
-            font.family: "Arial"
+            font.family: "Comic Sans MS"
             flat: false
             enabled: true
             display: AbstractButton.TextBesideIcon
