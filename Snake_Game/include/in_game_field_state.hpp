@@ -11,17 +11,22 @@
 #include <format>
 #include "model/game_field.hpp"
 
-class InGameFieldState : public QObject {
+class InGameFieldView : public QObject {
     Q_OBJECT
 
 private:
     std::shared_ptr<GameField> m_game_field;
+    std::shared_ptr<std::unordered_map<CellContent, QColor>> m_color_map;
     int m_field_cell_width {4};
     int m_field_cell_height {8};
 
 
 public:
-    explicit InGameFieldState(QObject *parent = nullptr) : QObject(parent) {};
+    explicit InGameFieldView(QObject *parent = nullptr) : QObject(parent) {
+        m_color_map->insert({CellContent::Snake, {"green"}});
+        m_color_map->insert({CellContent::Food, {"red"}});
+        m_color_map->insert({CellContent::Snake, {"white"}});
+    };
 
 
     Q_INVOKABLE int get_field_cell_width() {
@@ -41,8 +46,15 @@ public:
         return {"blue"};
     }
 
+    Q_INVOKABLE QColor get_cell_color_from_state(int index) {
+        Coord coord {index / m_game_field->get_field_width(),
+                          index % m_game_field->get_field_width()};
+
+        return m_color_map->at(m_game_field->get_cell_content(coord));
+    }
+
     Q_INVOKABLE QColor get_cell_color_by_state(int index) {
-        CoordPoint index_point
+        Coord index_point
             {index % m_field_cell_width, index / m_field_cell_width};
         return {"red"};
     }
@@ -52,10 +64,6 @@ public:
             update_cell(i);
         }
         red_cell_index = (red_cell_index + 1) % (m_field_cell_width * m_field_cell_height);
-    }
-
-    void update_field_by_state() {
-
     }
 
     void update_cell(int index) {

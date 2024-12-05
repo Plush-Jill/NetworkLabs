@@ -8,14 +8,14 @@
 
 
 TEST (CoordPointTest, get_relative_direction_from) {
-    CoordPoint p1 {10, 10};
-    CoordPoint p2 {9, 10};
-    CoordPoint p3 {4, 10};
-    CoordPoint p4 {11, 10};
-    CoordPoint p5 {10, 11};
-    CoordPoint p6 {10, 8};
+    Coord p1 {10, 10};
+    Coord p2 {9, 10};
+    Coord p3 {4, 10};
+    Coord p4 {11, 10};
+    Coord p5 {10, 11};
+    Coord p6 {10, 8};
 
-    CoordPoint p7 {3, 3};
+    Coord p7 {3, 3};
 
     EXPECT_TRUE(p2.get_relative_direction_from(p1) == Direction::Left);
     EXPECT_EQ(p3.get_relative_direction_from(p1), Direction::Left);

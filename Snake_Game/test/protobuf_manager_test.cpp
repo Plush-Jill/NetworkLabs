@@ -49,13 +49,13 @@ TEST(ProtobufManagerTests, create_game_state_proto) {
 
     snakes::GamePlayer game_player_proto =
             ProtobufManager::create_game_player_proto(game_player);
-    CoordPoint point1 (1, 2);
-    CoordPoint point2 (1, 3);
-    CoordPoint point3 (1, 4);
-    std::shared_ptr<std::deque<CoordPoint>> snake_segments {std::make_shared<std::deque<CoordPoint>>()};
+    Coord point1 (1, 2);
+    Coord point2 (1, 3);
+    Coord point3 (1, 4);
+    std::shared_ptr<std::deque<Coord>> snake_segments {std::make_shared<std::deque<Coord>>()};
     snake_segments->push_back(point1);
     snake_segments->push_back(point2);
-    std::vector<CoordPoint> foods {point2, point3};
+    std::vector<Coord> foods {point2, point3};
     std::vector<GamePlayer> players {game_player};
 
     Snake snake (0,
@@ -67,7 +67,7 @@ TEST(ProtobufManagerTests, create_game_state_proto) {
 
     GameState game_state (0,
                           std::make_shared<std::vector<Snake>>(snakes),
-                          std::make_shared<std::vector<CoordPoint>>(foods),
+                          std::make_shared<std::vector<Coord>>(foods),
                           std::make_shared<std::vector<GamePlayer>>(players));
     snakes::GameState game_state_proto = ProtobufManager::create_game_state_proto(
             game_state

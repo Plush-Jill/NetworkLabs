@@ -12,7 +12,7 @@
 #include "include/in_game_field_state.hpp"
 
 
-void foo (InGameFieldState* state) {
+void foo (InGameFieldView* state) {
     while (1) {
         usleep(90000);
         state->update_field();
@@ -33,14 +33,14 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
 
     QQmlApplicationEngine engine;
 
-    auto* in_game_field_state = new InGameFieldState;
-    engine.rootContext()->setContextProperty("InGameFieldState", in_game_field_state);
+    auto* in_game_field_state = new InGameFieldView;
+    engine.rootContext()->setContextProperty("InGameFieldView", in_game_field_state);
     auto* config_editor = new ConfigEditor;
     engine.rootContext()->setContextProperty("ConfigEditor", config_editor);
 
     engine.load(app_url);
 
-//    std::thread thread(foo, in_game_field_state);
+    std::thread thread(foo, in_game_field_state);
 //    QGuiApplication::exec();
 //    thread.join();
 //    return 0;

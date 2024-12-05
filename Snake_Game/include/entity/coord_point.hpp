@@ -7,31 +7,31 @@
 #include "snakes.pb.h"
 #include "enum/direction.hpp"
 
-class CoordPoint {
+class Coord {
 private:
     int m_x;
     int m_y;
 
 public:
-    explicit CoordPoint(int x, int y);
-    explicit CoordPoint(const snakes::GameState_Coord& coord);
+    explicit Coord(int x, int y);
+    explicit Coord(const snakes::GameState_Coord& coord);
     [[nodiscard]] int get_x() const;
     [[nodiscard]] int get_y() const;
     void set_x(int x);
     void set_y(int y);
-    CoordPoint get_shift_from(const CoordPoint& other) const {
-        return CoordPoint(this->m_x - other.m_x, this->m_y - other.m_y);
+    Coord get_shift_from(const Coord& other) const {
+        return Coord(this->m_x - other.m_x, this->m_y - other.m_y);
     }
-    bool operator==(const CoordPoint& other) const {
+    bool operator==(const Coord& other) const {
         return this->m_x == other.m_x && this->m_y == other.m_y;
     }
-    bool operator!=(const CoordPoint& other) const {
+    bool operator!=(const Coord& other) const {
         return this != &other;
     }
-    CoordPoint operator+(const CoordPoint& other) const {
-        return CoordPoint(m_x + other.m_x, m_y + other.m_y);
+    Coord operator+(const Coord& other) const {
+        return Coord(m_x + other.m_x, m_y + other.m_y);
     }
-    bool operator<(const CoordPoint& other) const {
+    bool operator<(const Coord& other) const {
         if (m_x == other.m_x && m_y == other.m_y) {
             return false;
         }
@@ -40,8 +40,8 @@ public:
         }
         return false;
     }
-    [[nodiscard]] Direction get_relative_direction_from(const CoordPoint& other) const {
-        CoordPoint shift = this->get_shift_from(other);
+    [[nodiscard]] Direction get_relative_direction_from(const Coord& other) const {
+        Coord shift = this->get_shift_from(other);
         int x = shift.m_x == 0 ? 0 : (shift.m_x > 0 ? 1 : -1);
         int y = shift.m_y == 0 ? 0 : (shift.m_y > 0 ? 1 : -1);
 

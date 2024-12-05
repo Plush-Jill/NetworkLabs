@@ -14,11 +14,11 @@ void GameState::set_game_players(std::shared_ptr<std::vector<GamePlayer>> game_p
     m_game_players = std::move(game_players);
 }
 
-std::shared_ptr<std::vector<CoordPoint>> GameState::get_foods() const {
+std::shared_ptr<std::vector<Coord>> GameState::get_foods() const {
     return m_foods;
 }
 
-void GameState::set_foods(std::shared_ptr<std::vector<CoordPoint>> foods) {
+void GameState::set_foods(std::shared_ptr<std::vector<Coord>> foods) {
     m_foods = std::move(foods);
 }
 
@@ -41,7 +41,7 @@ void GameState::set_state_order(int state_order) {
 GameState::GameState(
         int state_order,
         std::shared_ptr<std::vector<Snake>> snakes,
-        std::shared_ptr<std::vector<CoordPoint>> foods,
+        std::shared_ptr<std::vector<Coord>> foods,
         std::shared_ptr<std::vector<GamePlayer>> game_players) :
         m_state_order (state_order),
         m_snakes (std::move(snakes)),

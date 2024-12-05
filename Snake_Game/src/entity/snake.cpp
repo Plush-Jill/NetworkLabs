@@ -6,11 +6,11 @@
 
 #include "include/entity/snake.hpp"
 
-std::shared_ptr<std::deque<CoordPoint>> Snake::get_segments() const {
+std::shared_ptr<std::deque<Coord>> Snake::get_segments() const {
     return m_segments;
 }
 
-void Snake::set_segments(const std::shared_ptr<std::deque<CoordPoint>> segments) {
+void Snake::set_segments(const std::shared_ptr<std::deque<Coord>> segments) {
     m_segments = segments;
 }
 
@@ -40,7 +40,7 @@ void Snake::set_head_direction(Direction head_direction) {
 
 Snake::Snake(
         int id,
-        std::shared_ptr<std::deque<CoordPoint>> segments,
+        std::shared_ptr<std::deque<Coord>> segments,
         SnakeState snake_state,
         Direction head_direction) :
             m_id (id),
@@ -51,6 +51,6 @@ Snake::Snake(
 
 }
 
-CoordPoint Snake::get_head_coord() const {
+Coord Snake::get_head_coord() const {
     return m_segments->at(0);
 }

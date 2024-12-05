@@ -4,25 +4,25 @@
 
 #include "include/entity/coord_point.hpp"
 
-int CoordPoint::get_x() const {
+int Coord::get_x() const {
     return m_x;
 }
 
-void CoordPoint::set_x(int x) {
+void Coord::set_x(int x) {
     m_x = x;
 }
 
-int CoordPoint::get_y() const {
+int Coord::get_y() const {
     return m_y;
 }
 
-void CoordPoint::set_y(int y) {
+void Coord::set_y(int y) {
     m_y = y;
 }
 
-CoordPoint::CoordPoint(int x, int y) :
+Coord::Coord(int x, int y) :
         m_x(x), m_y(y) {}
 
-CoordPoint::CoordPoint(const snakes::GameState_Coord& coord)
-    : CoordPoint(coord.x(), coord.y()) {
+Coord::Coord(const snakes::GameState_Coord& coord)
+    : Coord(coord.x(), coord.y()) {
 }

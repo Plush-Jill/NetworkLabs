@@ -22,7 +22,7 @@ void SnakeController::turn_head(SnakeController::HeadDirection direction) {
             break;
     }
 
-    CoordPoint second_snake_segment {m_snake->get_head_coord() + m_snake->get_segments()->at(1)};
+    Coord second_snake_segment {m_snake->get_head_coord() + m_snake->get_segments()->at(1)};
     Direction back_direction {second_snake_segment.get_relative_direction_from(
             m_snake->get_head_coord())};
 

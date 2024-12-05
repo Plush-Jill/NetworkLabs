@@ -21,7 +21,7 @@ public:
             );
 
     static snakes::GameState::Coord create_coord_proto(
-            CoordPoint coord_point
+            Coord coord_point
             );
 
     /**
