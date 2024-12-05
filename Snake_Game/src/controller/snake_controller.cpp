@@ -5,6 +5,9 @@
 #include "include/controller/snake_controller.hpp"
 
 void SnakeController::turn_head(SnakeController::HeadDirection direction) {
+    if (m_snake == nullptr) {
+        return;
+    }
     Direction direction_to_turn;
     switch (direction) {
 

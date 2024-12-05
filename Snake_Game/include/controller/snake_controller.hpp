@@ -17,6 +17,7 @@ private:
 
 
 public:
+    explicit SnakeController() = default;
     explicit SnakeController(
             std::shared_ptr<Snake> snake,
             QObject* parent = nullptr);

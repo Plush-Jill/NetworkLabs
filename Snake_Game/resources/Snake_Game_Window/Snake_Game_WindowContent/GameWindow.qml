@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtCore
 import QtQml.Models
 import QtQml
+import com.example.snake 1.0
 
 Item {
     width: 1920
@@ -18,7 +19,12 @@ Item {
         height: parent.height
         color: "#431515"
     }
-
+    SnakeController {
+        id: snake_controller
+    }
+    // InGameFieldView {
+    //     id: view
+    // }
     Shortcut {
         sequence: "Escape"
         onActivated: loader.source = "MainMenu.qml"
@@ -30,8 +36,8 @@ Item {
 
     Grid {
         id: in_game_field
-        columns: InGameFieldState.get_field_cell_width()
-        rows: InGameFieldState.get_field_cell_height()
+        columns: InGameFieldView.get_field_cell_width()
+        rows: InGameFieldView.get_field_cell_height()
         x: 460
         y: 40
         width: 1000
@@ -41,7 +47,7 @@ Item {
 
         Repeater {
             id: field_cell_repeater
-            model: InGameFieldState.get_field_cell_height() * InGameFieldState.get_field_cell_width()
+            model: InGameFieldView.get_field_cell_height() * InGameFieldView.get_field_cell_width()
 
             delegate: Rectangle {
                 width: 50
@@ -54,14 +60,14 @@ Item {
                 // }
                 function update_color() {
                     console.log("item at " + index + " updated");
-                    color = InGameFieldState.get_cell_color(index);
+                    color = InGameFieldView.get_cell_color(index);
                 }
                 Connections {
-                    target: InGameFieldState
+                    target: InGameFieldView
 
                     function onCellUpdated(idx) {
                         var rect = in_game_field.children[idx];
-                        rect.color = InGameFieldState.get_cell_color(idx);
+                        rect.color = InGameFieldView.get_cell_color(idx);
                     }
                 }
             }

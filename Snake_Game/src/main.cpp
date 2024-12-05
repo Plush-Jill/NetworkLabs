@@ -10,6 +10,7 @@
 #include <boost/dll.hpp>
 #include "util/protobuf_manager.hpp"
 #include "include/in_game_field_state.hpp"
+#include "controller/snake_controller.hpp"
 
 
 void foo (InGameFieldView* state) {
@@ -31,16 +32,24 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
                                         "resources/Comic Sans MS.ttf").string().c_str());
     QUrl app_url = QUrl::fromLocalFile(qml_app_path.string().c_str());
 
+
+
     QQmlApplicationEngine engine;
 
-    auto* in_game_field_state = new InGameFieldView;
-    engine.rootContext()->setContextProperty("InGameFieldView", in_game_field_state);
+//    qmlRegisterType<SnakeController>("com.example.snake", 1, 0, "SnakeController");
+//    qmlRegisterType<InGameFieldView>("com.example.snake", 1, 0, "InGameFieldView");
+
+
+    auto* snake_controller = new SnakeController;
+    engine.rootContext()->setContextProperty("SnakeController", snake_controller);
+    auto* in_game_field_view = new InGameFieldView;
+    engine.rootContext()->setContextProperty("InGameFieldView", in_game_field_view);
     auto* config_editor = new ConfigEditor;
     engine.rootContext()->setContextProperty("ConfigEditor", config_editor);
 
     engine.load(app_url);
 
-    std::thread thread(foo, in_game_field_state);
+    std::thread thread(foo, in_game_field_view);
 //    QGuiApplication::exec();
 //    thread.join();
 //    return 0;

@@ -23,6 +23,7 @@ private:
 
 public:
     explicit InGameFieldView(QObject *parent = nullptr) : QObject(parent) {
+        m_color_map = std::make_shared<std::unordered_map<CellContent, QColor>>();
         m_color_map->insert({CellContent::Snake, {"green"}});
         m_color_map->insert({CellContent::Food, {"red"}});
         m_color_map->insert({CellContent::Snake, {"white"}});
