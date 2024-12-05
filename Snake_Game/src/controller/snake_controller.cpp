@@ -32,6 +32,7 @@ void SnakeController::turn_head(SnakeController::HeadDirection direction) {
     if (m_snake->get_head_direction() != back_direction) {
         m_snake->set_head_direction(direction_to_turn);
     }
+
 }
 
 SnakeController::SnakeController(
